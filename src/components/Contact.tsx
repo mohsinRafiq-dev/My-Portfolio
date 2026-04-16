@@ -2,27 +2,28 @@ import { motion } from 'framer-motion';
 import { Mail, Github, Linkedin, Twitter, MapPin, Phone } from 'lucide-react';
 import { AnimatedTitle } from './AnimatedElements';
 import { SectionBackground } from './SectionBackground';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import emailjs from '@emailjs/browser';
 
 const contactMethods = [
   {
     icon: Mail,
     label: 'Email',
-    value: 'hello@example.com',
-    href: 'mailto:hello@example.com',
+    value: 'mohsinrafiq931@gmail.com',
+    href: 'mailto:mohsinrafiq931@gmail.com',
     color: 'text-red-400',
   },
   {
     icon: Phone,
     label: 'Phone',
-    value: '+92 300 1234567',
-    href: 'tel:+923001234567',
+    value: '+92 3080045805',
+    href: 'tel:+923080045805',
     color: 'text-green-400',
   },
   {
     icon: MapPin,
     label: 'Location',
-    value: 'Karachi, Pakistan',
+    value: 'Islamabad, Pakistan',
     href: '#',
     color: 'text-white',
   },
@@ -64,6 +65,14 @@ export const Contact = () => {
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  // Initialize EmailJS
+  useEffect(() => {
+    const publicKey = (import.meta as any).env.VITE_EMAILJS_PUBLIC_KEY || 'YOUR_PUBLIC_KEY';
+    emailjs.init(publicKey);
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -71,24 +80,58 @@ export const Contact = () => {
       ...prev,
       [name]: value,
     }));
+    setError(''); // Clear error on input change
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
-    // Create mailto link
-    const mailtoLink = `mailto:hello@example.com?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(
-      `Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`
-    )}`;
-    
-    window.location.href = mailtoLink;
-    
-    // Show success message
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({ name: '', email: '', subject: '', message: '' });
-    }, 3000);
+    // Validation
+    if (!formData.name.trim() || !formData.email.trim() || !formData.subject.trim() || !formData.message.trim()) {
+      setError('Please fill in all fields');
+      return;
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setError('Please enter a valid email address');
+      return;
+    }
+
+    setLoading(true);
+    setError('');
+
+    try {
+      const serviceId = (import.meta as any).env.VITE_EMAILJS_SERVICE_ID || 'SERVICE_ID';
+      const templateId = (import.meta as any).env.VITE_EMAILJS_TEMPLATE_ID || 'TEMPLATE_ID';
+      const contactEmail = (import.meta as any).env.VITE_CONTACT_EMAIL || 'hello@example.com';
+
+      const response = await emailjs.send(
+        serviceId,
+        templateId,
+        {
+          to_email: contactEmail,
+          from_name: formData.name,
+          from_email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+        }
+      );
+
+      if (response.status === 200) {
+        setSubmitted(true);
+        setFormData({ name: '', email: '', subject: '', message: '' });
+        setTimeout(() => {
+          setSubmitted(false);
+        }, 3000);
+      }
+    } catch (err) {
+      setError('Failed to send message. Please try again.');
+      console.error('EmailJS error:', err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -141,7 +184,7 @@ export const Contact = () => {
                     </div>
                     <div>
                       <p className="text-gray-400 text-sm">{method.label}</p>
-                      <p className="text-white font-semibold">{method.value}</p>
+                      <p className="text-white font-semibold truncate text-sm">{method.value}</p>
                     </div>
                   </motion.a>
                 );
@@ -274,6 +317,17 @@ export const Contact = () => {
               />
             </motion.div>
 
+            {/* Error Message */}
+            {error && (
+              <motion.div
+                className="w-full bg-red-500/20 border border-red-500/50 rounded-lg px-4 py-3 text-red-400 text-sm"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+              >
+                {error}
+              </motion.div>
+            )}
+
             {/* Submit Button */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
@@ -283,11 +337,20 @@ export const Contact = () => {
             >
               <motion.button
                 type="submit"
-                className="w-full btn-transparent"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                disabled={loading}
+                className="w-full btn-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+                whileHover={!loading ? { scale: 1.05 } : {}}
+                whileTap={!loading ? { scale: 0.95 } : {}}
               >
-                {submitted ? (
+                {loading ? (
+                  <motion.span
+                    animate={{ opacity: [0.5, 1, 0.5] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                    className="inline-block"
+                  >
+                    Sending...
+                  </motion.span>
+                ) : submitted ? (
                   <motion.span
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
