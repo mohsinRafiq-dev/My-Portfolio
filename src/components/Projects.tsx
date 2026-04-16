@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { ExternalLink, Github, Code2 } from 'lucide-react';
 import { AnimatedTitle } from './AnimatedElements';
 import { SectionBackground } from './SectionBackground';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const allProjects = [
   {
@@ -146,6 +146,16 @@ const categories = [
 
 export const Projects = () => {
   const [activeFilter, setActiveFilter] = useState('all');
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const filteredProjects =
     activeFilter === 'all' ? allProjects : allProjects.filter((p) => p.category === activeFilter);
@@ -154,10 +164,10 @@ export const Projects = () => {
     <section id="projects" className="py-32 relative overflow-hidden bg-transparent">
       <SectionBackground variant="projects" />
 
-      {/* Enhanced animated background orbs */}
+      {/* Enhanced animated background orbs - disabled on mobile */}
       <motion.div
         className="absolute top-40 right-0 w-96 h-96 rounded-full blur-3xl opacity-25"
-        animate={{ 
+        animate={isMobile ? {} : {
           y: [0, 60, 0],
           x: [0, 40, 0],
           scale: [1, 1.2, 1]
@@ -170,22 +180,22 @@ export const Projects = () => {
 
       <motion.div
         className="absolute bottom-20 left-0 w-80 h-80 rounded-full blur-3xl opacity-20"
-        animate={{ 
-          y: [0, -50, 0],
-          x: [0, -30, 0],
+        animate={isMobile ? {} : { 
+          y: [0, -40, 0],
+          x: [0, -25, 0],
           scale: [1, 1.15, 1]
         }}
-        transition={{ duration: 16, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
+        transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut', delay: 1.2 }}
         style={{
           background: 'linear-gradient(135deg, #5b9eff, #c778dd)'
         }}
       />
 
       <div className="container mx-auto px-4 relative z-10">
-        {/* Section Header */}
+        {/* Section Head */}
         <motion.div
-          className="max-w-3xl mx-auto mb-20 text-center"
-          initial={{ opacity: 0, y: 30 }}
+          className="max-w-3xl mx-auto text-center mb-20"
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}

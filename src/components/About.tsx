@@ -3,8 +3,20 @@ import { Zap, Palette, Code2, Lightbulb } from 'lucide-react';
 import { AnimatedTitle } from './AnimatedElements';
 import { AnimatedCounter } from './AnimatedCounter';
 import { SectionBackground } from './SectionBackground';
+import { useState, useEffect } from 'react';
 
 export const About = () => {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const values = [
     { icon: Zap, title: 'Performance', description: 'Optimizing for lightning-fast speed', color: 'from-yellow-500 to-orange-500' },
     { icon: Palette, title: 'Design', description: 'Creating beautiful user interfaces', color: 'from-pink-500 to-purple-500' },
@@ -17,10 +29,10 @@ export const About = () => {
       {/* Impressive background */}
       <SectionBackground variant="about" />
 
-      {/* Animated background orbs */}
+      {/* Animated background orbs - disabled on mobile */}
       <motion.div
         className="absolute top-40 right-10 w-96 h-96 rounded-full blur-3xl opacity-25"
-        animate={{ 
+        animate={isMobile ? {} : { 
           y: [0, 60, 0],
           x: [0, 40, 0],
           scale: [1, 1.2, 1]
@@ -33,7 +45,7 @@ export const About = () => {
 
       <motion.div
         className="absolute bottom-40 left-10 w-80 h-80 rounded-full blur-3xl opacity-20"
-        animate={{ 
+        animate={isMobile ? {} : { 
           y: [0, -50, 0],
           x: [0, -30, 0],
           scale: [1, 1.15, 1]

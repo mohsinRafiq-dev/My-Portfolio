@@ -73,11 +73,19 @@ export const Contact = () => {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
-  // Initialize EmailJS
+  // Initialize EmailJS and mobile detection
   useEffect(() => {
     const publicKey = (import.meta as any).env.VITE_EMAILJS_PUBLIC_KEY || 'YOUR_PUBLIC_KEY';
     emailjs.init(publicKey);
+
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -145,10 +153,10 @@ export const Contact = () => {
       {/* Impressive background */}
       <SectionBackground variant="contact" />
 
-      {/* Animated background orbs */}
+      {/* Animated background orbs - disabled on mobile */}
       <motion.div
         className="absolute top-20 right-0 w-96 h-96 rounded-full blur-3xl opacity-25"
-        animate={{ 
+        animate={isMobile ? {} : { 
           y: [0, 60, 0],
           x: [0, 40, 0],
           scale: [1, 1.2, 1]
@@ -161,7 +169,7 @@ export const Contact = () => {
 
       <motion.div
         className="absolute bottom-20 left-0 w-80 h-80 rounded-full blur-3xl opacity-20"
-        animate={{ 
+        animate={isMobile ? {} : { 
           y: [0, -50, 0],
           x: [0, -30, 0],
           scale: [1, 1.15, 1]
@@ -296,7 +304,7 @@ export const Contact = () => {
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       title={social.label}
-                      animate={{
+                      animate={isMobile ? {} : {
                         y: [0, -5, 0]
                       }}
                       transition={{

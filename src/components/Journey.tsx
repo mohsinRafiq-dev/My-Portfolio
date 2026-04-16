@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Code2, Rocket, Zap, Target, Sparkles } from 'lucide-react';
 import { AnimatedTitle } from './AnimatedElements';
+import { useState, useEffect } from 'react';
 
 const timeline = [
   {
@@ -34,12 +35,23 @@ const timeline = [
 ];
 
 export const Journey = () => {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <section id="journey" className="py-32 relative overflow-hidden bg-transparent">
-      {/* Multiple animated background orbs */}
+      {/* Multiple animated background orbs - disabled on mobile */}
       <motion.div
         className="absolute top-20 right-0 w-96 h-96 rounded-full blur-3xl opacity-30"
-        animate={{ 
+        animate={isMobile ? {} : { 
           y: [0, 50, 0],
           x: [0, 30, 0],
           scale: [1, 1.2, 1]
@@ -52,7 +64,7 @@ export const Journey = () => {
 
       <motion.div
         className="absolute bottom-32 left-10 w-72 h-72 rounded-full blur-3xl opacity-25"
-        animate={{ 
+        animate={isMobile ? {} : { 
           y: [0, -40, 0],
           x: [0, -20, 0],
           scale: [1, 1.15, 1]

@@ -1,7 +1,19 @@
 import { motion } from 'framer-motion';
 import { Github, Linkedin, Twitter, Mail, Heart, Instagram } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 export const Footer = () => {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const currentYear = new Date().getFullYear();
 
   const footerLinks = [
@@ -22,10 +34,10 @@ export const Footer = () => {
 
   return (
     <footer className="relative overflow-hidden bg-gradient-to-t from-[#282c33] via-dark-950 to-transparent">
-      {/* Animated background orbs */}
+      {/* Animated background orbs - disabled on mobile */}
       <motion.div
         className="absolute top-0 right-0 w-96 h-96 rounded-full blur-3xl opacity-20"
-        animate={{ 
+        animate={isMobile ? {} : { 
           y: [0, 40, 0],
           x: [0, 30, 0],
           scale: [1, 1.15, 1]
@@ -38,7 +50,7 @@ export const Footer = () => {
 
       <motion.div
         className="absolute bottom-0 left-0 w-80 h-80 rounded-full blur-3xl opacity-15"
-        animate={{ 
+        animate={isMobile ? {} : { 
           y: [0, -30, 0],
           x: [0, -25, 0],
           scale: [1, 1.1, 1]
