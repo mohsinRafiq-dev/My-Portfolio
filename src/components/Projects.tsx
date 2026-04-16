@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ExternalLink, Github, Code2 } from 'lucide-react';
+import { Github, ArrowRight } from 'lucide-react';
 import { AnimatedTitle } from './AnimatedElements';
 import { SectionBackground } from './SectionBackground';
 import { useState, useEffect } from 'react';
@@ -9,12 +9,13 @@ const allProjects = [
     id: 1,
     category: 'web',
     featured: true,
-    title: 'E-Commerce Platform',
-    description: 'Full-stack e-commerce solution with real-time inventory management and payment processing',
-    tech: ['React', 'Node.js', 'MongoDB', 'Stripe'],
-    link: '#',
-    github: '#',
+    title: 'Justees',
+    description: 'Full-featured e-commerce platform with modern design and seamless shopping experience',
+    tech: ['React', 'Vite', 'TailwindCSS', 'Firebase'],
+    link: 'https://www.justees.store/',
+    github: 'https://github.com/mohsinRafiq-dev/Justees-Project',
     image: 'bg-gradient-to-br from-purple-500 to-pink-500',
+    imageUrl: '/Project%20Pics/Justees%20project.png',
     views: '58.9K',
     color: 'from-purple-500 to-pink-500'
   },
@@ -22,27 +23,29 @@ const allProjects = [
     id: 2,
     category: 'fullstack',
     featured: true,
-    title: 'AI Chat Application',
-    description: 'Real-time chat application with AI-powered suggestions and advanced search capabilities',
-    tech: ['React', 'Node.js', 'Socket.io', 'Express'],
-    link: '#',
-    github: '#',
-    image: 'bg-gradient-to-br from-[#c778dd] to-white',
-    views: '42.3K',
-    color: 'from-pink-500 to-purple-500'
+    title: 'Ashraf Furnitures',
+    description: 'Premium furniture e-commerce platform with Firebase backend, real-time inventory, and seamless shopping experience',
+    tech: ['React', 'TypeScript', 'Vite', 'TailwindCSS', 'Firebase', 'Framer Motion'],
+    link: 'https://www.ashraffurnitures.com/',
+    github: 'https://github.com/mohsinRafiq-dev/Ashraf-Furnitures',
+    image: 'bg-gradient-to-br from-amber-600 to-orange-600',
+    imageUrl: '/Project%20Pics/Ashraf%20Furnitures.png',
+    views: '85.2K',
+    color: 'from-amber-500 to-orange-500'
   },
   {
     id: 3,
     category: 'fullstack',
     featured: true,
-    title: 'Data Analytics Dashboard',
-    description: 'Interactive dashboard for visualizing complex datasets with real-time updates',
-    tech: ['React', 'D3.js', 'PostgreSQL', 'GraphQL'],
+    title: 'LearnCode AI',
+    description: 'AI-Powered Programming Learning Platform with interactive code execution, real-time tutorials, and AI-assisted learning (FYP)',
+    tech: ['React', 'TypeScript', 'Vite', 'TailwindCSS', 'React Router', 'Node.js', 'Express', 'MongoDB', 'REST API', 'Docker'],
     link: '#',
-    github: '#',
-    image: 'bg-gradient-to-br from-green-500 to-emerald-500',
-    views: '35.6K',
-    color: 'from-green-500 to-emerald-500'
+    github: 'https://github.com/mohsinRafiq-dev/learncodeai-frontend',
+    image: 'bg-gradient-to-br from-cyan-500 to-purple-500',
+    imageUrl: '/Project%20Pics/LearnCodeAi.png',
+    views: '42.1K',
+    color: 'from-cyan-500 to-purple-500'
   },
   {
     id: 4,
@@ -259,7 +262,7 @@ export const Projects = () => {
         </motion.div>
 
         {/* Projects Grid with Bar Animation */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {filteredProjects.map((project, idx) => (
             <motion.div
               key={project.id}
@@ -269,46 +272,47 @@ export const Projects = () => {
               transition={{ delay: idx * 0.1, duration: 0.5 }}
               viewport={{ once: true }}
             >
-              {/* Top Animated Bar */}
-              <motion.div
-                className={`h-1 rounded-full bg-gradient-to-r ${project.color} mb-5 overflow-hidden`}
-                initial={{ width: '0%' }}
-                whileInView={{ width: '100%' }}
-                transition={{ delay: idx * 0.1 + 0.1, duration: 0.8, ease: 'easeOut' }}
-                viewport={{ once: true }}
-              >
-                <motion.div
-                  className={`h-full bg-gradient-to-r ${project.color}`}
-                  animate={{ opacity: [0.5, 1, 0.5] }}
-                  transition={{ duration: 2.5, repeat: Infinity, delay: idx * 0.15 }}
-                />
-              </motion.div>
-
               {/* Project Card */}
               <motion.div
-                className="relative rounded-2xl border border-white/10 backdrop-blur-xl overflow-hidden group/card h-full flex flex-col"
-                style={{
-                  background: 'linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01))'
-                }}
+                className="relative rounded-2xl border border-white/10 backdrop-blur-xl overflow-hidden group/card h-full flex flex-col bg-gradient-to-br from-white/5 to-white/2 shadow-lg"
                 whileHover={{
-                  borderColor: 'rgba(255,255,255,0.2)',
-                  boxShadow: `0 0 40px ${
-                    (project.color || '').includes('purple') ? 'rgba(199, 120, 221, 0.3)' : 'rgba(91, 158, 255, 0.3)'
-                  }`,
-                  scale: 1.05,
+                  borderColor: 'rgba(199, 120, 221, 0.6)',
+                  boxShadow: '0 25px 50px rgba(199, 120, 221, 0.3), 0 0 40px rgba(199, 120, 221, 0.2)',
+                  y: -8,
                   transition: { type: 'spring', stiffness: 300, damping: 20 }
                 }}
               >
-                {/* Project Image Section */}
-                <motion.div
-                  className={`h-48 ${project.image} relative overflow-hidden`}
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ duration: 0.4 }}
+                {/* Large Project Image Section */}
+                <motion.div 
+                  className={`h-72 ${!project.imageUrl ? project.image : 'bg-gradient-to-br from-gray-900 to-black'} relative overflow-hidden flex items-center justify-center group`}
+                  whileHover="hover"
+                  initial="initial"
+                  variants={{
+                    initial: {},
+                    hover: {}
+                  }}
                 >
+                  {/* Image with proper scaling */}
+                  {project.imageUrl && (
+                    <motion.img 
+                      src={project.imageUrl}
+                      alt={project.title}
+                      className="h-full w-full object-cover"
+                      variants={{
+                        initial: { scale: 1, filter: 'blur(0px)' },
+                        hover: { scale: 1.15, filter: 'blur(6px)' }
+                      }}
+                      transition={{ duration: 0.5, ease: 'easeOut' }}
+                    />
+                  )}
+                  
+                  {/* Overlay with gradient and icons on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent z-5" />
+                  
                   {/* Featured Badge */}
                   {project.featured && (
                     <motion.div
-                      className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-bold text-white bg-gradient-to-r ${project.color} z-10`}
+                      className={`absolute top-4 right-4 px-4 py-2 rounded-full text-xs font-bold text-white bg-gradient-to-r ${project.color} z-20 shadow-lg`}
                       initial={{ opacity: 0, scale: 0 }}
                       whileInView={{ opacity: 1, scale: 1 }}
                       transition={{ delay: idx * 0.1 + 0.2 }}
@@ -318,62 +322,60 @@ export const Projects = () => {
                     </motion.div>
                   )}
                   
-                  {/* Overlay with gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
                   
-                  {/* Animated shine effect */}
+                  {/* Hover Icons Overlay - NOT Blurred */}
                   <motion.div
-                    className="absolute inset-0 opacity-0 group-hover/card:opacity-30 bg-gradient-to-r from-transparent via-white to-transparent"
-                    animate={{ x: ['100%', '-100%'] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  />
+                    className="absolute inset-0 flex items-center justify-center gap-6 z-30"
+                    variants={{
+                      initial: { opacity: 0 },
+                      hover: { opacity: 1 }
+                    }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {/* GitHub Link Icon */}
+                    <motion.a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-lg border-2 border-white/50 flex items-center justify-center text-white shadow-xl"
+                      whileHover={{ scale: 1.2, backgroundColor: 'rgba(255,255,255,0.3)', borderColor: 'rgba(199,120,221,1)' }}
+                      whileTap={{ scale: 0.95 }}
+                      title="View Code"
+                    >
+                      <Github size={20} />
+                    </motion.a>
+
+                    {/* Live Link Icon */}
+                    <motion.a
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-lg border-2 border-white/50 flex items-center justify-center text-white shadow-xl"
+                      whileHover={{ scale: 1.2, backgroundColor: 'rgba(255,255,255,0.3)', borderColor: 'rgba(199,120,221,1)' }}
+                      whileTap={{ scale: 0.95 }}
+                      title="View Live"
+                    >
+                      <ArrowRight size={20} />
+                    </motion.a>
+                  </motion.div>
                 </motion.div>
 
                 {/* Card Content */}
                 <div className="p-6 flex flex-col flex-grow">
-                  {/* Project Header with Icon */}
-                  <div className="flex items-start gap-4 mb-4">
-                    <motion.div
-                      className={`w-12 h-12 rounded-lg bg-gradient-to-br ${project.color} flex items-center justify-center flex-shrink-0`}
-                      animate={{
-                        scale: [1, 1.1, 1],
-                        y: [0, -5, 0]
-                      }}
-                      transition={{
-                        duration: 3,
-                        repeat: Infinity,
-                        delay: idx * 0.15,
-                        ease: 'easeInOut'
-                      }}
-                      whileHover={{ scale: 1.25 }}
-                    >
-                      <Code2 size={24} className="text-white" strokeWidth={1.5} />
-                    </motion.div>
-                    <div className="flex-1 min-w-0">
-                      <motion.h3
-                        className="text-lg font-bold text-white mb-1"
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        transition={{ delay: idx * 0.1 + 0.1 }}
-                        viewport={{ once: true }}
-                      >
-                        {project.title}
-                      </motion.h3>
-                      <motion.p
-                        className="text-xs text-gray-500 flex items-center gap-1"
-                        initial={{ opacity: 0.5 }}
-                        whileInView={{ opacity: 1 }}
-                        transition={{ delay: idx * 0.1 + 0.15 }}
-                        viewport={{ once: true }}
-                      >
-                        👁️ {project.views}
-                      </motion.p>
-                    </div>
-                  </div>
+                  {/* Title */}
+                  <motion.h3
+                    className="text-2xl font-bold text-white mb-3"
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    transition={{ delay: idx * 0.1 + 0.1 }}
+                    viewport={{ once: true }}
+                  >
+                    {project.title}
+                  </motion.h3>
 
                   {/* Description */}
                   <motion.p
-                    className="text-sm text-gray-400 leading-relaxed mb-4 flex-grow line-clamp-2"
+                    className="text-sm text-gray-400 leading-relaxed mb-4 flex-grow"
                     initial={{ opacity: 0.5 }}
                     whileInView={{ opacity: 1 }}
                     transition={{ delay: idx * 0.1 + 0.15 }}
@@ -384,88 +386,47 @@ export const Projects = () => {
 
                   {/* Tech Stack */}
                   <motion.div
-                    className="flex flex-wrap gap-2 mb-4"
+                    className="flex flex-wrap gap-2 mb-6"
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     transition={{ delay: idx * 0.1 + 0.2 }}
                     viewport={{ once: true }}
                   >
-                    {project.tech.slice(0, 3).map((tech, i) => (
+                    {project.tech.map((tech, i) => (
                       <span
                         key={i}
-                        className="text-xs px-2 py-1 rounded-full bg-white/5 text-gray-400 border border-white/10 hover:border-white/30 transition-colors"
+                        className="text-xs px-3 py-1 rounded-full bg-white/10 text-gray-300 border border-white/20 hover:bg-white/20 transition-colors"
                       >
                         {tech}
                       </span>
                     ))}
                   </motion.div>
 
-                  {/* Bottom Progress Bar */}
-                  <motion.div
-                    className="h-0.5 bg-gray-800 rounded-full overflow-hidden mb-4"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    transition={{ delay: idx * 0.1 + 0.25 }}
-                    viewport={{ once: true }}
+                  {/* View Project Link */}
+                  <motion.a
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-[#5b9eff] hover:text-[#c778dd] font-semibold text-sm transition-colors"
+                    whileHover={{ x: 5 }}
                   >
-                    <motion.div
-                      className={`h-full bg-gradient-to-r ${project.color}`}
-                      initial={{ width: '0%' }}
-                      whileInView={{ width: '100%' }}
-                      viewport={{ once: true }}
-                      animate={{
-                        opacity: [0.6, 1, 0.6]
-                      }}
-                      transition={{
-                        width: { delay: idx * 0.1 + 0.3, duration: 1, ease: 'easeOut' },
-                        opacity: { duration: 2, repeat: Infinity, ease: 'easeInOut' }
-                      }}
-                    />
-                  </motion.div>
+                    View Project
+                    <ArrowRight size={16} />
+                  </motion.a>
 
-                  {/* Footer Metrics */}
-                  <div className="flex items-center justify-between mb-4 text-xs font-semibold text-gray-600 uppercase tracking-widest">
-                    <motion.span
-                      initial={{ opacity: 0 }}
-                      whileInView={{ opacity: 1 }}
-                      transition={{ delay: idx * 0.1 + 0.2 }}
-                      viewport={{ once: true }}
-                    >
-                      Project {idx + 1}
-                    </motion.span>
-                    <motion.div
-                      className={`w-2 h-2 rounded-full bg-gradient-to-r ${project.color}`}
-                      animate={{
-                        scale: [1, 1.8, 1],
-                        opacity: [0.4, 1, 0.4]
-                      }}
-                      transition={{
-                        duration: 2.5,
-                        repeat: Infinity,
-                        delay: idx * 0.15
-                      }}
-                    />
-                  </div>
-
-                  {/* Links */}
-                  <div className="flex gap-3 mt-auto">
-                    <motion.a
-                      href={project.link}
-                      className="flex items-center gap-1.5 text-sm text-gray-400 hover:text-white transition-colors font-medium flex-1 py-2 px-3 rounded-lg hover:bg-white/5"
-                      whileHover={{ scale: 1.08 }}
-                    >
-                      <ExternalLink size={16} />
-                      Demo
-                    </motion.a>
+                  {/* GitHub Link */}
+                  {project.github !== '#' && (
                     <motion.a
                       href={project.github}
-                      className="flex items-center gap-1.5 text-sm text-gray-400 hover:text-white transition-colors font-medium flex-1 py-2 px-3 rounded-lg hover:bg-white/5"
-                      whileHover={{ scale: 1.08 }}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-gray-400 hover:text-white font-semibold text-sm transition-colors mt-3"
+                      whileHover={{ x: 5 }}
                     >
                       <Github size={16} />
-                      Code
+                      GitHub
                     </motion.a>
-                  </div>
+                  )}
                 </div>
               </motion.div>
             </motion.div>
