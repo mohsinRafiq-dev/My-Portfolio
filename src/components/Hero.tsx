@@ -369,7 +369,7 @@ export const Hero = () => {
             variants={item}
             initial="hidden"
             animate="visible"
-            className="relative w-full h-96 sm:h-80 md:h-96 lg:h-full flex items-center justify-center order-first md:order-last"
+            className="relative w-full h-96 sm:h-80 md:h-96 lg:h-full flex items-center justify-center order-first md:order-last md:-mt-48 lg:-mt-64"
             style={{ y: isMobile ? 0 : profileY }}
             transition={{ duration: 0.6, ease: 'easeOut', type: 'spring', stiffness: 100 }}
           >
