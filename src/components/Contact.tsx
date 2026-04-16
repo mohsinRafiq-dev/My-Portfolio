@@ -294,17 +294,14 @@ export const Contact = () => {
                       whileTap={{ scale: 0.9 }}
                       initial={{ opacity: 0, y: 10 }}
                       whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.35 + idx * 0.06, duration: 0.4 }}
                       viewport={{ once: true }}
                       title={social.label}
                       animate={{
                         y: [0, -5, 0]
                       }}
                       transition={{
-                        duration: 3,
-                        repeat: Infinity,
-                        ease: 'easeInOut',
-                        delay: idx * 0.15
+                        y: { duration: 3, repeat: Infinity, ease: 'easeInOut', delay: idx * 0.15 },
+                        default: { delay: 0.35 + idx * 0.06, duration: 0.4 }
                       }}
                     >
                       <Icon size={20} className="relative z-10" />

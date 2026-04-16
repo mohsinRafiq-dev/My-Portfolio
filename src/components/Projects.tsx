@@ -219,7 +219,7 @@ export const Projects = () => {
           transition={{ delay: 0.2 }}
           viewport={{ once: true }}
         >
-          {categories.map((cat, idx) => (
+            {categories.map((cat) => (
             <motion.button
               key={cat.id}
               onClick={() => setActiveFilter(cat.id)}

@@ -171,16 +171,13 @@ export const Footer = () => {
                     whileTap={{ scale: 0.85 }}
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.35 + idx * 0.06, duration: 0.4 }}
                     viewport={{ once: true }}
                     animate={{
                       y: [0, -4, 0]
                     }}
                     transition={{
-                      duration: 3,
-                      repeat: Infinity,
-                      ease: 'easeInOut',
-                      delay: idx * 0.15
+                      y: { duration: 3, repeat: Infinity, ease: 'easeInOut', delay: idx * 0.15 },
+                      default: { delay: 0.35 + idx * 0.06, duration: 0.4 }
                     }}
                     title={social.label}
                   >

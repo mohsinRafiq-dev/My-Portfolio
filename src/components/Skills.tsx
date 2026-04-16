@@ -208,12 +208,14 @@ export const Skills = () => {
             className="h-1 w-16 bg-gradient-to-r from-[#5b9eff] to-[#c778dd] rounded-full mx-auto mb-8"
             initial={{ width: 0, opacity: 0 }}
             whileInView={{ width: 64, opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.8, ease: 'easeOut' }}
             viewport={{ once: true }}
             animate={{ 
               opacity: [1, 0.5, 1]
             }}
-            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+            transition={{ 
+              opacity: { duration: 2, repeat: Infinity, ease: 'easeInOut' },
+              default: { delay: 0.2, duration: 0.8, ease: 'easeOut' }
+            }}
           />
 
           <motion.span

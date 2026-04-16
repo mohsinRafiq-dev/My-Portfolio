@@ -1,5 +1,5 @@
  import { motion, useScroll, useTransform } from 'framer-motion';
-import { Code2, Trophy, Rocket, Github, Linkedin, Database, GitBranch, Zap, Twitter, Instagram, Dribbble, Mail, ArrowRight, Mouse } from 'lucide-react';
+import { Code2, Trophy, Rocket, Github, Linkedin, Database, GitBranch, Zap, Twitter, Instagram, Mail, ArrowRight, Mouse } from 'lucide-react';
 import { TextReveal } from './TextReveal';
 import { useEffect, useState, useRef } from 'react';
 
