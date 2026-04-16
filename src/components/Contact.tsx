@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Mail, Github, Linkedin, Twitter, MapPin, Phone } from 'lucide-react';
+import { Mail, Github, Linkedin, Twitter, MapPin, Phone, Instagram } from 'lucide-react';
 import { AnimatedTitle } from './AnimatedElements';
 import { SectionBackground } from './SectionBackground';
 import { useState, useEffect } from 'react';
@@ -33,25 +33,31 @@ const socialLinks = [
   {
     icon: Github,
     label: 'GitHub',
-    href: 'https://github.com',
+    href: 'https://github.com/mohsinRafiq-dev',
     color: 'hover:text-white',
   },
   {
     icon: Linkedin,
     label: 'LinkedIn',
-    href: 'https://linkedin.com',
+    href: 'https://www.linkedin.com/in/muhammad-mohsin-rafiq-94060333a/',
     color: 'hover:text-[#c778dd]',
   },
   {
     icon: Twitter,
     label: 'Twitter',
-    href: 'https://twitter.com',
+    href: 'https://twitter.com/_asadmughal',
     color: 'hover:text-sky-400',
+  },
+  {
+    icon: Instagram,
+    label: 'Instagram',
+    href: 'https://www.instagram.com/_asadmughal/',
+    color: 'hover:text-pink-400',
   },
   {
     icon: Mail,
     label: 'Email',
-    href: 'mailto:hello@example.com',
+    href: 'mailto:mohsinrafiq931@gmail.com',
     color: 'hover:text-red-400',
   },
 ];
@@ -135,11 +141,38 @@ export const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-24 relative overflow-hidden bg-transparent">
+    <section id="contact" className="py-32 relative overflow-hidden bg-transparent">
       {/* Impressive background */}
       <SectionBackground variant="contact" />
+
+      {/* Animated background orbs */}
+      <motion.div
+        className="absolute top-20 right-0 w-96 h-96 rounded-full blur-3xl opacity-25"
+        animate={{ 
+          y: [0, 60, 0],
+          x: [0, 40, 0],
+          scale: [1, 1.2, 1]
+        }}
+        transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }}
+        style={{
+          background: 'linear-gradient(135deg, #c778dd, #5b9eff)'
+        }}
+      />
+
+      <motion.div
+        className="absolute bottom-20 left-0 w-80 h-80 rounded-full blur-3xl opacity-20"
+        animate={{ 
+          y: [0, -50, 0],
+          x: [0, -30, 0],
+          scale: [1, 1.15, 1]
+        }}
+        transition={{ duration: 16, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
+        style={{
+          background: 'linear-gradient(135deg, #5b9eff, #c778dd)'
+        }}
+      />
       
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 relative z-10">
         {/* Section Head */}
         <motion.div
           className="max-w-3xl mx-auto text-center mb-20"
@@ -148,11 +181,25 @@ export const Contact = () => {
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <span className="text-glow font-semibold text-sm uppercase tracking-widest mb-4 block">Get In Touch</span>
+          <motion.span 
+            className="text-[#5b9eff] font-semibold text-sm uppercase tracking-widest mb-4 block"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ delay: 0.1 }}
+            viewport={{ once: true }}
+          >
+            ✉️ Get In Touch
+          </motion.span>
           <AnimatedTitle>Let's Work Together</AnimatedTitle>
-          <p className="text-gray-400 text-lg mt-4">
+          <motion.p 
+            className="text-gray-400 text-lg mt-6 max-w-2xl mx-auto"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            viewport={{ once: true }}
+          >
             Have a project in mind? Feel free to reach out. I'm always interested in hearing about new opportunities.
-          </p>
+          </motion.p>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 max-w-6xl mx-auto mb-16">
@@ -164,7 +211,15 @@ export const Contact = () => {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h3 className="text-2xl font-bold mb-8">Contact Information</h3>
+            <motion.h3 
+              className="text-2xl font-bold mb-8 text-transparent bg-clip-text bg-gradient-to-r from-[#5b9eff] to-[#c778dd]"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ delay: 0.1 }}
+              viewport={{ once: true }}
+            >
+              Contact Information
+            </motion.h3>
             <div className="space-y-6">
               {contactMethods.map((method, idx) => {
                 const Icon = method.icon;
@@ -172,19 +227,37 @@ export const Contact = () => {
                   <motion.a
                     key={idx}
                     href={method.href}
-                    className="glass p-4 rounded-lg flex items-start gap-4 group hover:border-glow/50 transition-colors"
-                    whileHover={{ x: 10 }}
+                    className="group relative p-5 rounded-xl border border-white/10 overflow-hidden hover:border-white/30 transition-all"
+                    style={{
+                      background: 'linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01))'
+                    }}
+                    whileHover={{ 
+                      scale: 1.05, 
+                      boxShadow: `0 0 30px ${idx === 0 ? 'rgba(239, 68, 68, 0.3)' : idx === 1 ? 'rgba(34, 197, 94, 0.3)' : 'rgba(255, 255, 255, 0.1)'}`,
+                      x: 10
+                    }}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: idx * 0.1 }}
+                    transition={{ delay: idx * 0.1, duration: 0.5 }}
                     viewport={{ once: true }}
                   >
-                    <div className={`${method.color} mt-1`}>
-                      <Icon size={20} />
-                    </div>
-                    <div>
-                      <p className="text-gray-400 text-sm">{method.label}</p>
-                      <p className="text-white font-semibold truncate text-sm">{method.value}</p>
+                    {/* Top accent bar */}
+                    <motion.div
+                      className={`absolute top-0 left-0 h-1 w-0 ${idx === 0 ? 'bg-red-500' : idx === 1 ? 'bg-green-500' : 'bg-[#5b9eff]'} group-hover:w-full transition-all duration-300`}
+                    />
+                    
+                    <div className="flex items-start gap-4 relative z-10">
+                      <motion.div
+                        className={`${method.color} mt-1 p-3 rounded-lg ${idx === 0 ? 'bg-red-500/10' : idx === 1 ? 'bg-green-500/10' : 'bg-white/10'}`}
+                        whileHover={{ scale: 1.2, rotate: 10 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <Icon size={20} />
+                      </motion.div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-gray-400 text-xs uppercase tracking-widest">{method.label}</p>
+                        <p className="text-white font-semibold truncate text-sm mt-1">{method.value}</p>
+                      </div>
                     </div>
                   </motion.a>
                 );
@@ -194,12 +267,12 @@ export const Contact = () => {
             {/* Social Links */}
             <motion.div
               className="mt-12"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
               viewport={{ once: true }}
             >
-              <p className="text-gray-400 mb-4">Follow me on social media</p>
+              <p className="text-gray-400 mb-4 text-sm font-semibold">Follow me on social media</p>
               <div className="flex gap-4">
                 {socialLinks.map((social, idx) => {
                   const Icon = social.icon;
@@ -209,16 +282,32 @@ export const Contact = () => {
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`p-3 glass rounded-lg ${social.color} transition-colors`}
-                      whileHover={{ scale: 1.2, rotate: 10 }}
-                      whileTap={{ scale: 0.95 }}
+                      className="w-12 h-12 p-3 rounded-lg border border-white/10 flex items-center justify-center ${social.color} hover:border-white/30 transition-all overflow-hidden relative"
+                      style={{
+                        background: 'linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01))'
+                      }}
+                      whileHover={{ 
+                        scale: 1.2, 
+                        rotate: 10,
+                        boxShadow: '0 0 20px rgba(199, 120, 221, 0.4)'
+                      }}
+                      whileTap={{ scale: 0.9 }}
                       initial={{ opacity: 0, y: 10 }}
                       whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.3 + idx * 0.05 }}
+                      transition={{ delay: 0.35 + idx * 0.06, duration: 0.4 }}
                       viewport={{ once: true }}
                       title={social.label}
+                      animate={{
+                        y: [0, -5, 0]
+                      }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: 'easeInOut',
+                        delay: idx * 0.15
+                      }}
                     >
-                      <Icon size={20} />
+                      <Icon size={20} className="relative z-10" />
                     </motion.a>
                   );
                 })}

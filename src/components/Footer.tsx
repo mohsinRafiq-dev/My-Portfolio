@@ -21,15 +21,54 @@ export const Footer = () => {
   ];
 
   return (
-    <footer className="relative overflow-hidden bg-gradient-to-t from-dark-950 via-dark-950 to-transparent">
+    <footer className="relative overflow-hidden bg-gradient-to-t from-[#282c33] via-dark-950 to-transparent">
+      {/* Animated background orbs */}
+      <motion.div
+        className="absolute top-0 right-0 w-96 h-96 rounded-full blur-3xl opacity-20"
+        animate={{ 
+          y: [0, 40, 0],
+          x: [0, 30, 0],
+          scale: [1, 1.15, 1]
+        }}
+        transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
+        style={{
+          background: 'linear-gradient(135deg, #c778dd, #5b9eff)'
+        }}
+      />
+
+      <motion.div
+        className="absolute bottom-0 left-0 w-80 h-80 rounded-full blur-3xl opacity-15"
+        animate={{ 
+          y: [0, -30, 0],
+          x: [0, -25, 0],
+          scale: [1, 1.1, 1]
+        }}
+        transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+        style={{
+          background: 'linear-gradient(135deg, #5b9eff, #c778dd)'
+        }}
+      />
+
       {/* Animated divider */}
       <motion.div
-        className="h-1 bg-gradient-to-r from-transparent via-glow to-transparent"
-        initial={{ scaleX: 0 }}
-        whileInView={{ scaleX: 1 }}
-        transition={{ duration: 1 }}
+        className="h-1 bg-gradient-to-r from-transparent via-[#5b9eff] to-transparent relative z-10"
+        initial={{ scaleX: 0, opacity: 0 }}
+        whileInView={{ scaleX: 1, opacity: 1 }}
+        transition={{ duration: 1.2 }}
         viewport={{ once: true }}
-      />
+      >
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-r from-transparent via-[#c778dd] to-transparent"
+          animate={{
+            opacity: [0.5, 1, 0.5]
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            ease: 'easeInOut'
+          }}
+        />
+      </motion.div>
 
       <div className="container mx-auto px-4 py-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
@@ -110,7 +149,7 @@ export const Footer = () => {
             viewport={{ once: true }}
           >
             <h4 className="font-semibold mb-4">Connect</h4>
-            <div className="flex gap-3">
+            <div className="flex gap-4 flex-wrap">
               {socialLinks.map((social, idx) => {
                 const Icon = social.icon;
                 return (
@@ -119,12 +158,33 @@ export const Footer = () => {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2 glass rounded-lg hover:text-glow transition-colors"
-                    whileHover={{ scale: 1.2, rotate: 10 }}
-                    whileTap={{ scale: 0.9 }}
+                    className="w-12 h-12 p-2 rounded-lg border border-white/10 flex items-center justify-center hover:border-white/30 transition-all overflow-hidden relative"
+                    style={{
+                      background: 'linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01))'
+                    }}
+                    whileHover={{ 
+                      scale: 1.25, 
+                      rotate: 15,
+                      boxShadow: '0 0 20px rgba(199, 120, 221, 0.4)',
+                      borderColor: 'rgba(199, 120, 221, 0.6)'
+                    }}
+                    whileTap={{ scale: 0.85 }}
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.35 + idx * 0.06, duration: 0.4 }}
+                    viewport={{ once: true }}
+                    animate={{
+                      y: [0, -4, 0]
+                    }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: 'easeInOut',
+                      delay: idx * 0.15
+                    }}
                     title={social.label}
                   >
-                    <Icon size={18} />
+                    <Icon size={18} className="relative z-10" />
                   </motion.a>
                 );
               })}

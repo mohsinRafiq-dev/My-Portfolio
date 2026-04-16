@@ -17,6 +17,33 @@ export const About = () => {
       {/* Impressive background */}
       <SectionBackground variant="about" />
 
+      {/* Animated background orbs */}
+      <motion.div
+        className="absolute top-40 right-10 w-96 h-96 rounded-full blur-3xl opacity-25"
+        animate={{ 
+          y: [0, 60, 0],
+          x: [0, 40, 0],
+          scale: [1, 1.2, 1]
+        }}
+        transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }}
+        style={{
+          background: 'linear-gradient(135deg, #c778dd, #5b9eff)'
+        }}
+      />
+
+      <motion.div
+        className="absolute bottom-40 left-10 w-80 h-80 rounded-full blur-3xl opacity-20"
+        animate={{ 
+          y: [0, -50, 0],
+          x: [0, -30, 0],
+          scale: [1, 1.15, 1]
+        }}
+        transition={{ duration: 16, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
+        style={{
+          background: 'linear-gradient(135deg, #5b9eff, #c778dd)'
+        }}
+      />
+
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Head */}
         <motion.div
@@ -86,9 +113,9 @@ export const About = () => {
               
               <div className="space-y-6">
                 {[
-                  "Hey! I'm a Full Stack Developer passionate about building beautiful, performant digital experiences. My journey started with curiosity and has evolved into a deep love for creating seamless solutions.",
-                  "I specialize in modern web technologies and love transforming ideas into reality through clean, efficient code. From pixel-perfect frontends to robust backend systems, I enjoy every aspect of the development process.",
-                  "Beyond coding, I'm committed to continuous learning, contributing to open-source, and sharing knowledge with the developer community. Let's build something amazing together!"
+                  "Hey! I'm Mohsin Rafiq, a Full Stack Developer specializing in the MERN stack. I'm currently pursuing a Bachelor's degree in Computer Science at SZABIST, Islamabad, while building scalable and high-performance web applications.",
+                  "With over 3+ years of experience, I've developed 20+ projects ranging from responsive e-commerce platforms to complex full-stack applications. I'm passionate about clean architecture, responsive design, and creating smooth user experiences that delight end-users.",
+                  "Beyond coding, I'm committed to continuous learning, staying updated with modern technologies, and contributing to the developer community. Let's collaborate and build something amazing together!"
                 ].map((text, idx) => (
                   <motion.p
                     key={idx}
@@ -114,7 +141,7 @@ export const About = () => {
             >
               {[
                 { number: 3, label: 'Years Experience', suffix: '+', icon: '🚀' },
-                { number: 50, label: 'Projects Built', suffix: '+', icon: '💻' },
+                { number: 20, label: 'Projects Built', suffix: '+', icon: '💻' },
                 { number: 100, label: 'Dedication', suffix: '%', icon: '❤️' },
                 { number: 10, label: 'Happy Clients', suffix: '+', icon: '😊' },
               ].map((stat, idx) => (

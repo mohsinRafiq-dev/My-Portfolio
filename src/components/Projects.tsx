@@ -154,6 +154,33 @@ export const Projects = () => {
     <section id="projects" className="py-32 relative overflow-hidden bg-transparent">
       <SectionBackground variant="projects" />
 
+      {/* Enhanced animated background orbs */}
+      <motion.div
+        className="absolute top-40 right-0 w-96 h-96 rounded-full blur-3xl opacity-25"
+        animate={{ 
+          y: [0, 60, 0],
+          x: [0, 40, 0],
+          scale: [1, 1.2, 1]
+        }}
+        transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }}
+        style={{
+          background: 'linear-gradient(135deg, #c778dd, #5b9eff)'
+        }}
+      />
+
+      <motion.div
+        className="absolute bottom-20 left-0 w-80 h-80 rounded-full blur-3xl opacity-20"
+        animate={{ 
+          y: [0, -50, 0],
+          x: [0, -30, 0],
+          scale: [1, 1.15, 1]
+        }}
+        transition={{ duration: 16, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
+        style={{
+          background: 'linear-gradient(135deg, #5b9eff, #c778dd)'
+        }}
+      />
+
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
         <motion.div
@@ -184,25 +211,33 @@ export const Projects = () => {
           </motion.p>
         </motion.div>
 
-        {/* Filter Buttons */}
+        {/* Filter Buttons with enhanced styling */}
         <motion.div
           className="flex justify-center gap-3 mb-16 flex-wrap"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
           viewport={{ once: true }}
         >
-          {categories.map((cat) => (
+          {categories.map((cat, idx) => (
             <motion.button
               key={cat.id}
               onClick={() => setActiveFilter(cat.id)}
-              className={`px-5 py-2 rounded-lg font-medium text-sm transition-all ${
+              className={`px-5 py-2 rounded-lg font-medium text-sm transition-all relative overflow-hidden group ${
                 activeFilter === cat.id
                   ? 'bg-gradient-to-r from-[#5b9eff] to-[#c778dd] text-white shadow-lg'
                   : 'border border-white/20 text-gray-400 hover:border-white/40 hover:text-white'
               }`}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.08, y: -2 }}
+              whileTap={{ scale: 0.92 }}
+              animate={activeFilter === cat.id ? { 
+                boxShadow: [
+                  '0 0 15px rgba(91, 158, 255, 0.4)',
+                  '0 0 30px rgba(199, 120, 221, 0.6)',
+                  '0 0 15px rgba(91, 158, 255, 0.4)'
+                ]
+              } : {}}
+              transition={{ duration: 2, repeat: Infinity }}
             >
               {cat.label}
             </motion.button>

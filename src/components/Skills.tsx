@@ -164,10 +164,37 @@ export const Skills = () => {
   const activeCategory = skillCategories.find(cat => cat.id === activeTab);
 
   return (
-    <section id="skills" className="py-24 relative overflow-hidden bg-transparent">
+    <section id="skills" className="py-32 relative overflow-hidden bg-transparent">
       <SectionBackground variant="skills" />
 
-      <div className="container mx-auto px-4">
+      {/* Animated background orbs */}
+      <motion.div
+        className="absolute top-32 left-0 w-96 h-96 rounded-full blur-3xl opacity-25"
+        animate={{ 
+          y: [0, 50, 0],
+          x: [0, 30, 0],
+          scale: [1, 1.2, 1]
+        }}
+        transition={{ duration: 13, repeat: Infinity, ease: 'easeInOut' }}
+        style={{
+          background: 'linear-gradient(135deg, #5b9eff, #c778dd)'
+        }}
+      />
+
+      <motion.div
+        className="absolute bottom-32 right-0 w-80 h-80 rounded-full blur-3xl opacity-20"
+        animate={{ 
+          y: [0, -40, 0],
+          x: [0, -25, 0],
+          scale: [1, 1.15, 1]
+        }}
+        transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut', delay: 1.2 }}
+        style={{
+          background: 'linear-gradient(135deg, #c778dd, #5b9eff)'
+        }}
+      />
+
+      <div className="container mx-auto px-4 relative z-10">
         {/* Section Header with Animated Line */}
         <motion.div
           className="max-w-3xl mx-auto mb-20 text-center relative"
@@ -178,15 +205,19 @@ export const Skills = () => {
         >
           {/* Animated accent line */}
           <motion.div
-            className="h-1 w-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full mx-auto mb-8"
-            initial={{ width: 0 }}
-            whileInView={{ width: 64 }}
+            className="h-1 w-16 bg-gradient-to-r from-[#5b9eff] to-[#c778dd] rounded-full mx-auto mb-8"
+            initial={{ width: 0, opacity: 0 }}
+            whileInView={{ width: 64, opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.8, ease: 'easeOut' }}
             viewport={{ once: true }}
+            animate={{ 
+              opacity: [1, 0.5, 1]
+            }}
+            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
           />
 
           <motion.span
-            className="inline-block text-blue-400 font-semibold text-sm uppercase tracking-widest mb-4"
+            className="inline-block text-[#5b9eff] font-semibold text-sm uppercase tracking-widest mb-4"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ delay: 0.1 }}
