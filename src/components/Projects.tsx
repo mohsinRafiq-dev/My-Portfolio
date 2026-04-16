@@ -398,10 +398,13 @@ export const Projects = () => {
                       className={`h-full bg-gradient-to-r ${project.color}`}
                       initial={{ width: '0%' }}
                       whileInView={{ width: '100%' }}
-                      transition={{ delay: idx * 0.1 + 0.3, duration: 1, ease: 'easeOut' }}
                       viewport={{ once: true }}
                       animate={{
                         opacity: [0.6, 1, 0.6]
+                      }}
+                      transition={{
+                        width: { delay: idx * 0.1 + 0.3, duration: 1, ease: 'easeOut' },
+                        opacity: { duration: 2, repeat: Infinity, ease: 'easeInOut' }
                       }}
                     />
                   </motion.div>

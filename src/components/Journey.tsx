@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Code2, Rocket, Zap, Target, ChevronRight, Sparkles } from 'lucide-react';
+import { Code2, Rocket, Zap, Target, Sparkles } from 'lucide-react';
 import { AnimatedTitle } from './AnimatedElements';
 
 const timeline = [
@@ -269,15 +269,13 @@ export const Journey = () => {
                           className={`h-full bg-gradient-to-r ${item.color}`}
                           initial={{ width: '0%', opacity: 0.3 }}
                           whileInView={{ width: '100%', opacity: 1 }}
-                          transition={{ delay: idx * 0.15 + 0.3, duration: 1.2, ease: 'easeOut' }}
                           viewport={{ once: true }}
                           animate={{
                             opacity: [0.3, 1, 0.3]
                           }}
                           transition={{
-                            duration: 2,
-                            repeat: Infinity,
-                            ease: 'easeInOut'
+                            width: { delay: idx * 0.15 + 0.3, duration: 1.2, ease: 'easeOut' },
+                            opacity: { duration: 2, repeat: Infinity, ease: 'easeInOut' }
                           }}
                         />
                       </motion.div>
