@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Home, User, Briefcase, Code2, Zap, Mail } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 export const Header = () => {
@@ -7,12 +7,12 @@ export const Header = () => {
   const [activeNav, setActiveNav] = useState(0);
 
   const navItems = [
-    { label: 'Home', href: '#' },
-    { label: 'About', href: '#about' },
-    { label: 'Journey', href: '#journey' },
-    { label: 'Projects', href: '#projects' },
-    { label: 'Skills', href: '#skills' },
-    { label: 'Contact', href: '#contact' },
+    { label: 'Home', href: '#', icon: Home },
+    { label: 'About', href: '#about', icon: User },
+    { label: 'Journey', href: '#journey', icon: Briefcase },
+    { label: 'Projects', href: '#projects', icon: Code2 },
+    { label: 'Skills', href: '#skills', icon: Zap },
+    { label: 'Contact', href: '#contact', icon: Mail },
   ];
 
   useEffect(() => {
@@ -54,28 +54,6 @@ export const Header = () => {
       sections.forEach((section) => observer.unobserve(section));
     };
   }, [navItems]);
-
-
-  const menuVariants = {
-    hidden: { opacity: 0, y: -20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: -10 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.3 },
-    },
-  };
 
   return (
     <header className="fixed top-0 w-full z-50 pointer-events-none">
@@ -136,53 +114,102 @@ export const Header = () => {
         ))}
       </nav>
 
-      {/* Mobile Menu Button */}
+      {/* Mobile Menu Button - Compact */}
       <motion.button
-        className="fixed top-4 right-4 md:hidden z-50 pointer-events-auto"
+        className="fixed top-4 right-4 md:hidden z-50 pointer-events-auto w-10 h-10 rounded-lg bg-white/5 border border-[#c778dd]/30 flex items-center justify-center text-[#c778dd] hover:bg-white/10 transition-all"
         onClick={() => setIsOpen(!isOpen)}
-        whileHover={{ scale: 1.1 }}
+        whileHover={{ scale: 1.1, borderColor: '#c778dd' }}
         whileTap={{ scale: 0.9 }}
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1, rotate: isOpen ? 90 : 0 }}
+        animate={{ opacity: 1 }}
         transition={{ duration: 0.3 }}
       >
-        {isOpen ? <X size={24} /> : <Menu size={24} />}
+        <motion.div
+          animate={{ rotate: isOpen ? 90 : 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          {isOpen ? <X size={18} /> : <Menu size={18} />}
+        </motion.div>
       </motion.button>
 
-      {/* Mobile Menu */}
+      {/* Compact Transparent Dropdown Menu */}
       {isOpen && (
-        <motion.nav
-          className="fixed top-16 left-0 right-0 flex flex-col gap-3 px-4 py-4 md:hidden z-40 pointer-events-auto bg-white/10 backdrop-blur-md border-b border-white/10"
-          variants={menuVariants}
-          initial="hidden"
-          animate="visible"
+        <motion.div
+          className="fixed top-14 right-4 md:hidden z-40 pointer-events-auto"
+          initial={{ opacity: 0, scale: 0.9, y: -10 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 0.2, type: 'spring', stiffness: 400, damping: 25 }}
         >
-          {navItems.map((item, idx) => (
-            <motion.a
-              key={idx}
-              href={item.href}
-              onClick={(e) => {
-                e.preventDefault();
-                setActiveNav(idx);
-                if (item.href === '#') {
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                } else {
-                  document.querySelector(item.href)?.scrollIntoView({ behavior: 'smooth' });
-                }
-                setIsOpen(false);
+          {/* Click outside to close */}
+          <motion.div
+            className="fixed inset-0"
+            onClick={() => setIsOpen(false)}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          />
+
+          {/* Compact Menu Container */}
+          <motion.nav
+            className="relative w-48 bg-white/8 backdrop-blur-xl border border-white/15 rounded-2xl overflow-hidden shadow-2xl shadow-[#c778dd]/10"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Animated gradient border effect */}
+            <motion.div
+              className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"
+              style={{
+                background: 'linear-gradient(135deg, #5b9eff/10, #c778dd/10)',
               }}
-              className={`px-4 py-3 rounded-lg transition-colors text-center border font-medium cursor-pointer text-white ${
-                activeNav === idx
-                  ? 'bg-gradient-to-r from-[#5b9eff] to-[#c778dd] border-transparent'
-                  : 'border border-white/20 bg-white/5 hover:bg-white/10'
-              }`}
-              variants={itemVariants}
-              whileTap={{ scale: 0.95 }}
-            >
-              {item.label}
-            </motion.a>
-          ))}
-        </motion.nav>
+            />
+
+            <div className="relative space-y-1 p-2">
+              {navItems.map((item, idx) => {
+                const IconComponent = item.icon;
+                return (
+                  <motion.a
+                    key={idx}
+                    href={item.href}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setActiveNav(idx);
+                      if (item.href === '#') {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                      } else {
+                        document.querySelector(item.href)?.scrollIntoView({ behavior: 'smooth' });
+                      }
+                      setIsOpen(false);
+                    }}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: idx * 0.05, duration: 0.3 }}
+                    whileHover={{ x: 5 }}
+                    whileTap={{ scale: 0.95 }}
+                    className={`flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all duration-200 cursor-pointer group ${
+                      activeNav === idx
+                        ? 'bg-gradient-to-r from-[#5b9eff]/40 to-[#c778dd]/40 text-white'
+                        : 'text-gray-300 hover:text-white hover:bg-white/5'
+                    }`}
+                  >
+                    <motion.div
+                      animate={activeNav === idx ? { scale: 1.2 } : {}}
+                      transition={{ type: 'spring', stiffness: 400 }}
+                      className="flex-shrink-0"
+                    >
+                      <IconComponent size={16} />
+                    </motion.div>
+                    <span className="text-sm font-medium">{item.label}</span>
+                    {activeNav === idx && (
+                      <motion.div
+                        className="ml-auto w-1.5 h-1.5 rounded-full bg-gradient-to-r from-[#5b9eff] to-[#c778dd]"
+                        layoutId="mobileActiveIndicator"
+                        transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+                      />
+                    )}
+                  </motion.a>
+                );
+              })}
+            </div>
+          </motion.nav>
+        </motion.div>
       )}
     </header>
   );

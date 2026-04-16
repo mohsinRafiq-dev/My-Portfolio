@@ -138,7 +138,7 @@ export const Hero = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center max-w-7xl mx-auto w-full">
           
           {/* Left Column - Text Content */}
-          <motion.div className="space-y-6 md:space-y-8">
+          <motion.div className="space-y-6 md:space-y-8 order-last md:order-first">
             
             {/* Status Badge */}
             <motion.div variants={item}>
@@ -314,13 +314,13 @@ export const Hero = () => {
                     <polyline points="7 10 12 15 17 10" />
                     <line x1="12" y1="15" x2="12" y2="3" />
                   </motion.svg>
-                  Download CV
+                  Resume
                 </span>
               </motion.button>
             </motion.div>
 
             {/* Social Links */}
-            <motion.div variants={item} className="flex gap-4 pt-4 flex-wrap">
+            <motion.div variants={item} className="flex gap-4 pt-4 flex-wrap justify-center">
               {[
                 { icon: Linkedin, href: 'https://linkedin.com', label: 'LinkedIn' },
                 { icon: Github, href: 'https://github.com', label: 'GitHub' },
@@ -370,40 +370,40 @@ export const Hero = () => {
             variants={item}
             initial="hidden"
             animate="visible"
-            className="relative h-full hidden lg:flex items-center justify-center"
-            style={{ y: profileY }}
+            className="relative w-full h-96 sm:h-80 md:h-96 lg:h-full flex items-center justify-center order-first md:order-last"
+            style={{ y: isMobile ? 0 : profileY }}
             transition={{ duration: 0.6, ease: 'easeOut', type: 'spring', stiffness: 100 }}
           >
             {/* Dual glow backgrounds */}
             <motion.div
               className="absolute inset-0 flex items-center justify-center"
-              animate={isMobile ? {} : {
-                scale: [1, 1.3, 0.9, 1.2, 1],
-                opacity: [0.6, 0.9, 0.2, 0.8, 0.6],
-                rotate: [0, 45, 90, 135, 180]
+              animate={{
+                scale: isMobile ? [1, 1.15, 1] : [1, 1.3, 0.9, 1.2, 1],
+                opacity: isMobile ? [0.5, 0.7, 0.5] : [0.6, 0.9, 0.2, 0.8, 0.6],
+                rotate: isMobile ? [0, 180, 360] : [0, 45, 90, 135, 180]
               }}
-              transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+              transition={{ duration: isMobile ? 15 : 8, repeat: Infinity, ease: 'easeInOut' }}
             >
               <div className="absolute inset-0 rounded-full bg-gradient-to-br from-[#c778dd]/50 via-transparent to-[#5b9eff]/50 blur-3xl" />
             </motion.div>
 
             <motion.div
               className="absolute inset-0 flex items-center justify-center"
-              animate={isMobile ? {} : {
-                scale: [1.2, 1.4, 0.95, 1.25, 1.2],
-                opacity: [0.25, 0.5, 0.1, 0.4, 0.25],
-                rotate: [-45, 0, 45, 90, -45]
+              animate={{
+                scale: isMobile ? [1.1, 1.25, 1.1] : [1.2, 1.4, 0.95, 1.25, 1.2],
+                opacity: isMobile ? [0.2, 0.4, 0.2] : [0.25, 0.5, 0.1, 0.4, 0.25],
+                rotate: isMobile ? [-180, 0, 180] : [-45, 0, 45, 90, -45]
               }}
-              transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 0.3 }}
+              transition={{ duration: isMobile ? 18 : 10, repeat: Infinity, ease: 'easeInOut', delay: 0.3 }}
             >
               <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-[#5b9eff]/40 to-[#c778dd]/40 blur-3xl" />
             </motion.div>
 
             {/* Animated Particles around profile */}
-            {!isMobile && [0, 1, 2, 3, 4].map((idx) => (
+            {[0, 1, 2, 3, 4].map((idx) => (
               <motion.div
                 key={`particle-${idx}`}
-                className="absolute w-1.5 h-1.5 rounded-full bg-gradient-to-br from-[#c778dd] to-[#5b9eff]"
+                className="absolute w-1.5 h-1.5 rounded-full bg-gradient-to-br from-[#c778dd] to-[#5b9eff] z-20"
                 animate={{
                   x: [
                     Math.cos((idx / 5) * Math.PI * 2) * 200,
@@ -437,14 +437,14 @@ export const Hero = () => {
               return (
                 <motion.div
                   key={idx}
-                  className="absolute w-10 h-10 rounded-lg bg-gradient-to-br from-[#c778dd]/20 to-[#5b9eff]/20 border border-[#c778dd]/40 flex items-center justify-center text-[#c778dd] backdrop-blur-sm"
+                  className="absolute w-10 h-10 rounded-lg bg-gradient-to-br from-[#c778dd]/20 to-[#5b9eff]/20 border border-[#c778dd]/40 flex items-center justify-center text-[#c778dd] backdrop-blur-sm md:flex z-20"
                   style={{
                     top: item.top,
                     right: item.right,
                     bottom: item.bottom,
                     left: item.left,
                   }}
-                  animate={isMobile ? {} : {
+                  animate={{
                     y: [0, -12, 0],
                   }}
                   transition={{
@@ -453,7 +453,7 @@ export const Hero = () => {
                     ease: 'easeInOut',
                     delay: item.delay,
                   }}
-                  whileHover={{ scale: isMobile ? 1 : 1.2 }}
+                  whileHover={{ scale: 1.2 }}
                 >
                   <Icon size={18} className="relative z-10" />
                 </motion.div>
@@ -462,10 +462,10 @@ export const Hero = () => {
 
             {/* Profile Image Circle */}
             <motion.div
-              className="relative w-80 h-80 lg:w-64 lg:h-64 xl:w-80 xl:h-80 z-10 rounded-full overflow-hidden shadow-2xl shadow-[#c778dd]/30"
+              className="relative w-56 h-56 sm:w-64 sm:h-64 md:w-72 md:h-72 lg:w-72 lg:h-72 xl:w-80 xl:h-80 z-10 rounded-full overflow-hidden shadow-2xl shadow-[#c778dd]/30"
               whileHover={isMobile ? {} : { scale: 1.12 }}
-              animate={isMobile ? {} : { 
-                boxShadow: ['0 0 20px rgba(199, 120, 221, 0.3)', '0 0 40px rgba(199, 120, 221, 0.6)']
+              animate={{ 
+                boxShadow: isMobile ? ['0 0 15px rgba(199, 120, 221, 0.2)', '0 0 25px rgba(199, 120, 221, 0.4)'] : ['0 0 20px rgba(199, 120, 221, 0.3)', '0 0 40px rgba(199, 120, 221, 0.6)']
               }}
               transition={{ 
                 boxShadow: { duration: 2, repeat: Infinity, ease: 'easeInOut' },
@@ -473,21 +473,19 @@ export const Hero = () => {
               }}
             >
               {/* Simple Rotating Gradient Border */}
-              {!isMobile && (
-                <motion.div
-                  className="absolute inset-0 border-3 rounded-full pointer-events-none"
-                  animate={{
-                    rotate: 360,
-                  }}
-                  transition={{
-                    rotate: { duration: 35, repeat: Infinity, ease: 'linear' },
-                  }}
-                  style={{
-                    borderImage: 'linear-gradient(135deg, #c778dd, #5b9eff, #c778dd) 1',
-                    zIndex: 5,
-                  }}
-                />
-              )}
+              <motion.div
+                className="absolute inset-0 border-3 rounded-full pointer-events-none hidden md:block"
+                animate={{
+                  rotate: 360,
+                }}
+                transition={{
+                  rotate: { duration: isMobile ? 50 : 35, repeat: Infinity, ease: 'linear' },
+                }}
+                style={{
+                  borderImage: 'linear-gradient(135deg, #c778dd, #5b9eff, #c778dd) 1',
+                  zIndex: 5,
+                }}
+              />
 
               {/* Profile image - clean and clear */}
               <img 
@@ -501,7 +499,7 @@ export const Hero = () => {
 
         {/* Scroll indicator */}
         <motion.div
-          className="absolute bottom-24 left-1/2 -translate-x-1/2"
+          className="absolute -bottom-4 sm:bottom-5 md:bottom-24 left-1/2 -translate-x-1/2 -ml-16"
           animate={{ y: isMobile ? [0, 15, 0] : [0, 20, 0] }}
           transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
         >
