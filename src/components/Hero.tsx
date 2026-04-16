@@ -320,14 +320,13 @@ export const Hero = () => {
             </motion.div>
 
             {/* Social Links */}
-            <motion.div variants={item} className="flex gap-4 pt-4 flex-wrap justify-center">
+            <motion.div variants={item} className="flex gap-4 pt-4 flex-wrap justify-center lg:justify-start">
               {[
-                { icon: Linkedin, href: 'https://linkedin.com', label: 'LinkedIn' },
-                { icon: Github, href: 'https://github.com', label: 'GitHub' },
-                { icon: Twitter, href: 'https://twitter.com', label: 'Twitter' },
-                { icon: Instagram, href: 'https://instagram.com', label: 'Instagram' },
-                { icon: Dribbble, href: 'https://dribbble.com', label: 'Dribbble' },
-                { icon: Mail, href: 'mailto:your@email.com', label: 'Email' },
+                { icon: Linkedin, href: 'https://www.linkedin.com/in/muhammad-mohsin-rafiq-94060333a/', label: 'LinkedIn' },
+                { icon: Github, href: 'https://github.com/mohsinRafiq-dev', label: 'GitHub' },
+                { icon: Twitter, href: 'https://twitter.com/_asadmughal', label: 'Twitter' },
+                { icon: Instagram, href: 'https://www.instagram.com/_asadmughal/', label: 'Instagram' },
+                { icon: Mail, href: 'mailto:mohsinrafiq931@gmail.com', label: 'Email' },
               ].map((social, idx) => {
                 const Icon = social.icon;
                 return (

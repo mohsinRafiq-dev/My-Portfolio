@@ -63,21 +63,25 @@ export const Header = () => {
       {/* Professional Logo - Static */}
       <motion.div
         className="fixed top-4 left-4 z-50 pointer-events-auto md:top-8 md:left-12"
-        whileHover={{ scale: 1.08 }}
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, type: 'spring', stiffness: 300 }}
+        whileHover={{ scale: 1.12 }}
+        initial={{ opacity: 0, x: -30, scale: 0.8 }}
+        animate={{ opacity: 1, x: 0, scale: 1 }}
+        transition={{ duration: 0.6, type: 'spring', stiffness: 200, damping: 20, delay: 0.2 }}
       >
-        <div className="px-4 py-2 rounded-2xl bg-gradient-to-br from-[#5b9eff] to-[#c778dd] border border-white/20 flex items-center justify-center shadow-lg relative overflow-hidden group">
-          {/* Animated gradient background on hover */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#c778dd] to-[#5b9eff] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <div className="px-4 py-2 rounded-xl bg-white/5 border border-[#c778dd]/30 flex items-center justify-center hover:bg-white/10 transition-all relative overflow-hidden group">
           {/* Braces + Mohsin Logo Text */}
-          <span className="text-white font-semibold text-sm relative z-10 leading-none">{`{mohsin}`}</span>
+          <span className="text-[#c778dd] font-semibold text-sm relative z-10 leading-none hover:text-white transition-colors">{`{mohsin}`}</span>
         </div>
       </motion.div>
 
       {/* Desktop Navigation - Center */}
-      <nav className="hidden md:flex items-center gap-1 bg-transparent backdrop-blur-md rounded-full px-8 py-3 border border-white/5 fixed left-1/2 top-4 transform -translate-x-1/2 z-50 pointer-events-auto">
+      <motion.nav 
+        className="hidden md:flex items-center gap-1 bg-white/2 backdrop-blur-sm rounded-full px-8 py-3 border border-white/10 fixed top-4 z-50 pointer-events-auto"
+        style={{ left: '50%', x: '-50%' }}
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, type: 'spring', stiffness: 200, damping: 20, delay: 0.1 }}
+      >
         {navItems.map((item, idx) => (
           <motion.a
             key={idx}
@@ -101,18 +105,20 @@ export const Header = () => {
                 ? { boxShadow: '0 0 20px rgba(91, 158, 255, 0.6)', scale: 1.05 }
                 : { color: '#ffffff', backgroundColor: 'rgba(199, 120, 221, 0.1)', scale: 1.05 }
             }
-            initial={{ opacity: 0, y: -10 }}
+            initial={{ opacity: 0, y: -15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ 
-              delay: idx * 0.1, 
+              delay: 0.2 + idx * 0.12, 
               duration: 0.5,
-              default: { type: 'spring', stiffness: 300, damping: 20 }
+              type: 'spring',
+              stiffness: 300,
+              damping: 25
             }}
           >
             <span className="relative z-10">{item.label}</span>
           </motion.a>
         ))}
-      </nav>
+      </motion.nav>
 
       {/* Mobile Menu Button - Compact */}
       <motion.button
@@ -120,9 +126,9 @@ export const Header = () => {
         onClick={() => setIsOpen(!isOpen)}
         whileHover={{ scale: 1.1, borderColor: '#c778dd' }}
         whileTap={{ scale: 0.9 }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.3 }}
+        initial={{ opacity: 0, x: 30, scale: 0.8 }}
+        animate={{ opacity: 1, x: 0, scale: 1 }}
+        transition={{ duration: 0.6, type: 'spring', stiffness: 200, damping: 20, delay: 0.3 }}
       >
         <motion.div
           animate={{ rotate: isOpen ? 90 : 0 }}
@@ -136,9 +142,9 @@ export const Header = () => {
       {isOpen && (
         <motion.div
           className="fixed top-14 right-4 md:hidden z-40 pointer-events-auto"
-          initial={{ opacity: 0, scale: 0.9, y: -10 }}
+          initial={{ opacity: 0, scale: 0.85, y: -15 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 0.2, type: 'spring', stiffness: 400, damping: 25 }}
+          transition={{ duration: 0.3, type: 'spring', stiffness: 300, damping: 20 }}
         >
           {/* Click outside to close */}
           <motion.div
@@ -178,11 +184,11 @@ export const Header = () => {
                       }
                       setIsOpen(false);
                     }}
-                    initial={{ opacity: 0, x: 20 }}
+                    initial={{ opacity: 0, x: 30 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: idx * 0.05, duration: 0.3 }}
-                    whileHover={{ x: 5 }}
-                    whileTap={{ scale: 0.95 }}
+                    transition={{ delay: 0.1 + idx * 0.08, duration: 0.4, type: 'spring', stiffness: 300, damping: 25 }}
+                    whileHover={{ x: 8 }}
+                    whileTap={{ scale: 0.92 }}
                     className={`flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all duration-200 cursor-pointer group ${
                       activeNav === idx
                         ? 'bg-gradient-to-r from-[#5b9eff]/40 to-[#c778dd]/40 text-white'

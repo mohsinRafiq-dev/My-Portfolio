@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Github, Linkedin, Twitter, Mail, Heart } from 'lucide-react';
+import { Github, Linkedin, Twitter, Mail, Heart, Instagram } from 'lucide-react';
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -13,10 +13,11 @@ export const Footer = () => {
   ];
 
   const socialLinks = [
-    { icon: Github, href: 'https://github.com', label: 'GitHub' },
-    { icon: Linkedin, href: 'https://linkedin.com', label: 'LinkedIn' },
-    { icon: Twitter, href: 'https://twitter.com', label: 'Twitter' },
-    { icon: Mail, href: 'mailto:hello@example.com', label: 'Email' },
+    { icon: Github, href: 'https://github.com/mohsinRafiq-dev', label: 'GitHub' },
+    { icon: Linkedin, href: 'https://www.linkedin.com/in/muhammad-mohsin-rafiq-94060333a/', label: 'LinkedIn' },
+    { icon: Twitter, href: 'https://twitter.com/_asadmughal', label: 'Twitter' },
+    { icon: Instagram, href: 'https://www.instagram.com/_asadmughal/', label: 'Instagram' },
+    { icon: Mail, href: 'mailto:mohsinrafiq931@gmail.com', label: 'Email' },
   ];
 
   return (
@@ -151,7 +152,7 @@ export const Footer = () => {
           <div className="text-gray-400 text-sm">
             <p>
               © {currentYear} All rights reserved. <br className="md:hidden" />
-              Made with <Heart size={14} className="inline text-red-500 mx-1" /> by Your Name
+              Made with <Heart size={14} className="inline text-red-500 mx-1" /> by Mohsin Rafiq
             </p>
           </div>
 
