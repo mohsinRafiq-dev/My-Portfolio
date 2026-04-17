@@ -1,9 +1,23 @@
  import { motion, useScroll, useTransform } from 'framer-motion';
-import { Code2, Trophy, Rocket, Github, Linkedin, Database, GitBranch, Zap, Twitter, Instagram, Mail, ArrowRight, Mouse } from 'lucide-react';
+import { Code2, Trophy, Rocket, Github, Linkedin, Database, GitBranch, Zap, Instagram, Mail, ArrowRight, Mouse } from 'lucide-react';
 import { TextReveal } from './TextReveal';
 import { useEffect, useState, useRef } from 'react';
 
 const profileImage = new URL('../Public/IMG_3465.jpeg', import.meta.url).href;
+
+const XLogo = ({ size = 20, className = '' }: { size?: number; className?: string }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    className={className}
+    aria-hidden="true"
+  >
+    <path d="M18.244 2H21.5l-7.11 8.128L22.75 22h-6.545l-5.124-6.726L4.87 22H1.61l7.605-8.697L1.25 2h6.71l4.633 6.116L18.244 2zm-1.14 18h1.804L6.98 3.9H5.04L17.104 20z" />
+  </svg>
+);
 
 const CountUpNumber = ({ target }: { target: string }) => {
   const [displayValue, setDisplayValue] = useState('0');
@@ -338,7 +352,7 @@ export const Hero = () => {
               {[
                 { icon: Linkedin, href: 'https://www.linkedin.com/in/muhammad-mohsin-rafiq-94060333a/', label: 'LinkedIn' },
                 { icon: Github, href: 'https://github.com/mohsinRafiq-dev', label: 'GitHub' },
-                { icon: Twitter, href: 'https://twitter.com/_asadmughal', label: 'Twitter' },
+                { icon: XLogo, href: 'https://x.com/_asadmughal', label: 'X' },
                 { icon: Instagram, href: 'https://www.instagram.com/_asadmughal/', label: 'Instagram' },
                 { icon: Mail, href: 'mailto:mohsinrafiq931@gmail.com', label: 'Email' },
               ].map((social, idx) => {
