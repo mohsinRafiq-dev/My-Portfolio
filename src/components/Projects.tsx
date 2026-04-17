@@ -245,16 +245,16 @@ export const Projects = () => {
                   ? 'bg-gradient-to-r from-[#5b9eff] to-[#c778dd] text-white shadow-lg'
                   : 'border border-white/20 text-gray-400 hover:border-white/40 hover:text-white'
               }`}
-              whileHover={{ scale: 1.08, y: -2 }}
-              whileTap={{ scale: 0.92 }}
-              animate={activeFilter === cat.id ? { 
+              whileHover={isMobile ? {} : { scale: 1.08, y: -2 }}
+              whileTap={isMobile ? {} : { scale: 0.92 }}
+              animate={!isMobile && activeFilter === cat.id ? {
                 boxShadow: [
                   '0 0 15px rgba(91, 158, 255, 0.4)',
                   '0 0 30px rgba(199, 120, 221, 0.6)',
                   '0 0 15px rgba(91, 158, 255, 0.4)'
                 ]
               } : {}}
-              transition={{ duration: 2, repeat: Infinity }}
+              transition={!isMobile && activeFilter === cat.id ? { duration: 2, repeat: Infinity } : { duration: 0.2 }}
             >
               {cat.label}
             </motion.button>
@@ -274,8 +274,8 @@ export const Projects = () => {
             >
               {/* Project Card */}
               <motion.div
-                className="relative rounded-2xl border border-white/10 backdrop-blur-xl overflow-hidden group/card h-full flex flex-col bg-gradient-to-br from-white/5 to-white/2 shadow-lg"
-                whileHover={{
+                className={`relative rounded-2xl border border-white/10 ${isMobile ? '' : 'backdrop-blur-xl'} overflow-hidden group/card h-full flex flex-col bg-gradient-to-br from-white/5 to-white/2 shadow-lg`}
+                whileHover={isMobile ? {} : {
                   borderColor: 'rgba(199, 120, 221, 0.6)',
                   boxShadow: '0 25px 50px rgba(199, 120, 221, 0.3), 0 0 40px rgba(199, 120, 221, 0.2)',
                   y: -8,
@@ -285,7 +285,7 @@ export const Projects = () => {
                 {/* Large Project Image Section */}
                 <motion.div 
                   className={`h-72 ${!project.imageUrl ? project.image : 'bg-gradient-to-br from-gray-900 to-black'} relative overflow-hidden flex items-center justify-center group`}
-                  whileHover="hover"
+                  whileHover={isMobile ? undefined : 'hover'}
                   initial="initial"
                   variants={{
                     initial: {},
@@ -325,7 +325,7 @@ export const Projects = () => {
                   
                   {/* Hover Icons Overlay - NOT Blurred */}
                   <motion.div
-                    className="absolute inset-0 flex items-center justify-center gap-6 z-30"
+                    className={`absolute inset-0 ${isMobile ? 'hidden' : 'flex'} items-center justify-center gap-6 z-30`}
                     variants={{
                       initial: { opacity: 0 },
                       hover: { opacity: 1 }
@@ -408,7 +408,7 @@ export const Projects = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 text-[#5b9eff] hover:text-[#c778dd] font-semibold text-sm transition-colors"
-                    whileHover={{ x: 5 }}
+                    whileHover={isMobile ? {} : { x: 5 }}
                   >
                     View Project
                     <ArrowRight size={16} />
@@ -421,7 +421,7 @@ export const Projects = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 text-gray-400 hover:text-white font-semibold text-sm transition-colors mt-3"
-                      whileHover={{ x: 5 }}
+                      whileHover={isMobile ? {} : { x: 5 }}
                     >
                       <Github size={16} />
                       GitHub
@@ -444,7 +444,7 @@ export const Projects = () => {
           <motion.a
             href="https://github.com"
             className="inline-block px-8 py-4 border-2 border-[#5b9eff] text-[#5b9eff] font-semibold rounded-xl hover:bg-[#5b9eff]/10 transition-all"
-            whileHover={{ scale: 1.05, boxShadow: '0 0 30px rgba(91, 158, 255, 0.3)' }}
+            whileHover={isMobile ? {} : { scale: 1.05, boxShadow: '0 0 30px rgba(91, 158, 255, 0.3)' }}
             whileTap={{ scale: 0.95 }}
           >
             View All Projects on GitHub

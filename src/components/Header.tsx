@@ -58,7 +58,7 @@ export const Header = () => {
   return (
     <header className="fixed top-0 w-full z-50 pointer-events-none">
       {/* Top Bar Background - Mobile Only */}
-      <div className="fixed top-0 left-0 right-0 h-16 bg-white/2 backdrop-blur-sm border-b border-white/5 z-40 md:hidden" />
+      <div className="fixed top-0 left-0 right-0 h-16 bg-black/35 border-b border-white/5 z-40 md:hidden" />
       
       {/* Professional Logo - Static */}
       <motion.div
@@ -142,31 +142,27 @@ export const Header = () => {
       {isOpen && (
         <motion.div
           className="fixed top-14 right-4 md:hidden z-40 pointer-events-auto"
-          initial={{ opacity: 0, scale: 0.85, y: -15 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 0.3, type: 'spring', stiffness: 300, damping: 20 }}
+          initial={{ opacity: 0, y: -8, scale: 0.98 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.18, ease: 'easeOut' }}
         >
           {/* Click outside to close */}
           <motion.div
-            className="fixed inset-0"
+            className="fixed inset-0 bg-black/20"
             onClick={() => setIsOpen(false)}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
+            transition={{ duration: 0.15, ease: 'linear' }}
           />
 
           {/* Compact Menu Container */}
           <motion.nav
-            className="relative w-48 bg-white/8 backdrop-blur-xl border border-white/15 rounded-2xl overflow-hidden shadow-2xl shadow-[#c778dd]/10"
+            className="relative w-48 bg-[#111827]/95 border border-white/15 rounded-2xl overflow-hidden shadow-xl shadow-black/40"
             onClick={(e) => e.stopPropagation()}
+            initial={{ opacity: 0, y: -4 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.16, ease: 'easeOut' }}
           >
-            {/* Animated gradient border effect */}
-            <motion.div
-              className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"
-              style={{
-                background: 'linear-gradient(135deg, #5b9eff/10, #c778dd/10)',
-              }}
-            />
-
             <div className="relative space-y-1 p-2">
               {navItems.map((item, idx) => {
                 const IconComponent = item.icon;
@@ -184,31 +180,22 @@ export const Header = () => {
                       }
                       setIsOpen(false);
                     }}
-                    initial={{ opacity: 0, x: 30 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.1 + idx * 0.08, duration: 0.4, type: 'spring', stiffness: 300, damping: 25 }}
-                    whileHover={{ x: 8 }}
-                    whileTap={{ scale: 0.92 }}
+                    initial={{ opacity: 0, y: 4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: idx * 0.025, duration: 0.14, ease: 'easeOut' }}
+                    whileTap={{ scale: 0.98 }}
                     className={`flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all duration-200 cursor-pointer group ${
                       activeNav === idx
                         ? 'bg-gradient-to-r from-[#5b9eff]/40 to-[#c778dd]/40 text-white'
                         : 'text-gray-300 hover:text-white hover:bg-white/5'
                     }`}
                   >
-                    <motion.div
-                      animate={activeNav === idx ? { scale: 1.2 } : {}}
-                      transition={{ type: 'spring', stiffness: 400 }}
-                      className="flex-shrink-0"
-                    >
+                    <div className="flex-shrink-0">
                       <IconComponent size={16} />
-                    </motion.div>
+                    </div>
                     <span className="text-sm font-medium">{item.label}</span>
                     {activeNav === idx && (
-                      <motion.div
-                        className="ml-auto w-1.5 h-1.5 rounded-full bg-gradient-to-r from-[#5b9eff] to-[#c778dd]"
-                        layoutId="mobileActiveIndicator"
-                        transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-                      />
+                      <div className="ml-auto w-1.5 h-1.5 rounded-full bg-gradient-to-r from-[#5b9eff] to-[#c778dd]" />
                     )}
                   </motion.a>
                 );

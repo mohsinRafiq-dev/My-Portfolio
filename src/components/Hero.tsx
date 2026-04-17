@@ -59,6 +59,9 @@ export const Hero = () => {
   const { scrollY } = useScroll();
   const profileY = useTransform(scrollY, [0, 500], [0, 150]);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const mobileHeroAnimationsEnabled = true;
+  const reduceHeroOnMobile = isMobile && !mobileHeroAnimationsEnabled;
+  const liteHeroOnMobile = isMobile && mobileHeroAnimationsEnabled;
 
   useEffect(() => {
     const handleResize = () => {
@@ -93,21 +96,27 @@ export const Hero = () => {
       {/* Animated background orbs */}
       <motion.div
         className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-gradient-to-br from-[#c778dd]/70 to-transparent blur-3xl"
-        animate={isMobile ? {} : {
+        animate={reduceHeroOnMobile ? {} : liteHeroOnMobile ? {
+          scale: [1, 1.1, 1],
+          y: [0, -20, 0],
+        } : {
           scale: [1, 1.3, 0.9, 1.2, 1],
           x: [0, 60, -30, 50, 0],
           y: [0, -40, 20, -30, 0],
         }}
-        transition={{ duration: 25, repeat: Infinity, ease: 'easeInOut' }}
+        transition={{ duration: liteHeroOnMobile ? 18 : 25, repeat: Infinity, ease: 'easeInOut' }}
       />
       <motion.div
         className="absolute -bottom-40 -left-40 w-96 h-96 rounded-full bg-gradient-to-tr from-[#5b9eff]/70 to-transparent blur-3xl"
-        animate={isMobile ? {} : {
+        animate={reduceHeroOnMobile ? {} : liteHeroOnMobile ? {
+          scale: [1, 1.08, 1],
+          y: [0, 18, 0],
+        } : {
           scale: [1, 1.1, 0.85, 1.15, 1],
           x: [0, -60, 30, -50, 0],
           y: [0, 40, -20, 30, 0],
         }}
-        transition={{ duration: 30, repeat: Infinity, ease: 'easeInOut' }}
+        transition={{ duration: liteHeroOnMobile ? 20 : 30, repeat: Infinity, ease: 'easeInOut' }}
       />
 
       {/* Animated grid pattern */}
@@ -125,12 +134,12 @@ export const Hero = () => {
       {/* Floating geometric shapes */}
       <motion.div
         className="absolute top-1/4 left-1/4 w-32 h-32 border border-[#5b9eff]/40 rounded-lg hidden lg:block"
-        animate={isMobile ? {} : { rotate: 360, scale: [1, 1.2, 1] }}
+        animate={reduceHeroOnMobile ? {} : { rotate: 360, scale: [1, 1.2, 1] }}
         transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
       />
       <motion.div
         className="absolute bottom-1/3 right-1/3 w-24 h-24 border border-[#c778dd]/40 rounded-full hidden lg:block"
-        animate={isMobile ? {} : { rotate: -360, scale: [1, 1.15, 1] }}
+        animate={reduceHeroOnMobile ? {} : { rotate: -360, scale: [1, 1.15, 1] }}
         transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
       />
 
@@ -144,15 +153,20 @@ export const Hero = () => {
             <motion.div variants={item}>
               <motion.div 
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-emerald-500/40 bg-emerald-500/10 backdrop-blur-sm"
-                animate={{ 
+                animate={reduceHeroOnMobile ? {} : liteHeroOnMobile ? {
+                  borderColor: ['rgba(16, 185, 129, 0.35)', 'rgba(16, 185, 129, 0.55)', 'rgba(16, 185, 129, 0.35)']
+                } : {
                   borderColor: ['rgba(16, 185, 129, 0.4)', 'rgba(16, 185, 129, 0.8)', 'rgba(16, 185, 129, 0.4)'],
                   boxShadow: ['0 0 15px rgba(16, 185, 129, 0.2)', '0 0 30px rgba(16, 185, 129, 0.5)', '0 0 15px rgba(16, 185, 129, 0.2)']
                 }}
-                transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                transition={reduceHeroOnMobile ? { duration: 0 } : { duration: liteHeroOnMobile ? 3 : 2, repeat: Infinity, ease: 'easeInOut' }}
               >
                 <motion.div 
                   className="w-2 h-2 rounded-full bg-emerald-400"
-                  animate={{
+                  animate={reduceHeroOnMobile ? {} : liteHeroOnMobile ? {
+                    scale: [1, 1.2, 1],
+                    opacity: [1, 0.6, 1]
+                  } : {
                     scale: [1, 1.5, 1],
                     opacity: [1, 0.4, 1],
                     boxShadow: [
@@ -161,8 +175,8 @@ export const Hero = () => {
                       '0 0 0px rgba(52, 211, 153, 0)'
                     ]
                   }}
-                  transition={{
-                    duration: 1.5,
+                  transition={reduceHeroOnMobile ? { duration: 0 } : {
+                    duration: liteHeroOnMobile ? 2.2 : 1.5,
                     repeat: Infinity,
                     ease: 'easeInOut'
                   }}
@@ -187,10 +201,10 @@ export const Hero = () => {
                   delay={0}
                 />
                 <motion.div
-                  animate={{
+                  animate={reduceHeroOnMobile ? {} : {
                     backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
                   }}
-                  transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+                  transition={reduceHeroOnMobile ? { duration: 0 } : { duration: liteHeroOnMobile ? 10 : 6, repeat: Infinity, ease: 'easeInOut' }}
                   style={{
                     background: 'linear-gradient(90deg, #5b9eff 0%, #c778dd 50%, #9e5bb8 100%)',
                     backgroundSize: '200% 100%',
@@ -232,7 +246,7 @@ export const Hero = () => {
                   >
                     <motion.div
                       whileHover={{ scale: isMobile ? 1 : 1.25, rotate: isMobile ? 0 : 15 }}
-                      animate={isMobile ? {} : { rotate: [0, 5, -5, 0] }}
+                      animate={reduceHeroOnMobile ? {} : { rotate: [0, 5, -5, 0] }}
                       transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: idx * 0.2 }}
                       className="text-[#c778dd] mb-2 inline-block"
                     >
@@ -240,7 +254,7 @@ export const Hero = () => {
                     </motion.div>
                     <motion.div 
                       className="text-xl md:text-3xl font-bold text-white"
-                      animate={isMobile ? {} : { scale: [1, 1.1, 1] }}
+                      animate={reduceHeroOnMobile ? {} : { scale: [1, 1.1, 1] }}
                       transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut', delay: idx * 0.15 }}
                     >
                       <CountUpNumber target={stat.value} />
@@ -255,7 +269,7 @@ export const Hero = () => {
             <motion.div variants={item} className="flex flex-col sm:flex-row gap-4 pt-6">
               <motion.button
                 className="group relative px-6 md:px-8 py-3 md:py-4 font-bold rounded-full overflow-hidden flex items-center justify-center gap-2 bg-gradient-to-r from-[#5b9eff] to-[#c778dd] text-white shadow-lg"
-                whileHover={{ 
+                whileHover={reduceHeroOnMobile ? {} : {
                   scale: 1.08, 
                   boxShadow: '0 20px 60px rgba(199, 120, 221, 0.8), 0 0 40px rgba(91, 158, 255, 0.6)' 
                 }}
@@ -265,19 +279,19 @@ export const Hero = () => {
                 <motion.div
                   className="absolute inset-0 bg-white/20"
                   initial={{ x: '-100%' }}
-                  whileHover={{ x: '100%' }}
+                  whileHover={reduceHeroOnMobile ? {} : { x: '100%' }}
                   transition={{ duration: 0.5 }}
                 />
                 <motion.div
                   className="absolute inset-0 rounded-full bg-gradient-to-r from-[#5b9eff]/40 to-[#c778dd]/40 blur-xl opacity-0"
-                  animate={{ opacity: [0, 0.5, 0] }}
-                  transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                  animate={reduceHeroOnMobile || liteHeroOnMobile ? {} : { opacity: [0, 0.5, 0] }}
+                  transition={reduceHeroOnMobile ? { duration: 0 } : { duration: 2, repeat: Infinity, ease: 'easeInOut' }}
                 />
                 <span className="relative z-10 flex items-center gap-2">
                   Let's Talk
                   <motion.div
-                    animate={{ x: [0, 6, 0], rotate: [0, 10, 0] }}
-                    transition={{ duration: 1.5, repeat: Infinity }}
+                    animate={reduceHeroOnMobile ? {} : liteHeroOnMobile ? { x: [0, 3, 0] } : { x: [0, 6, 0], rotate: [0, 10, 0] }}
+                    transition={reduceHeroOnMobile ? { duration: 0 } : { duration: liteHeroOnMobile ? 2.2 : 1.5, repeat: Infinity }}
                   >
                     <ArrowRight size={18} />
                   </motion.div>
@@ -286,7 +300,7 @@ export const Hero = () => {
 
               <motion.button
                 className="group relative px-6 md:px-8 py-3 md:py-4 font-bold rounded-full border-2 border-[#c778dd]/50 text-white overflow-hidden flex items-center justify-center gap-2"
-                whileHover={{ 
+                whileHover={reduceHeroOnMobile ? {} : {
                   scale: 1.08, 
                   backgroundColor: 'rgba(199, 120, 221, 0.15)', 
                   borderColor: '#c778dd',
@@ -296,8 +310,8 @@ export const Hero = () => {
               >
                 <motion.div
                   className="absolute inset-0 border-2 border-transparent rounded-full"
-                  animate={{ borderColor: ['rgba(199, 120, 221, 0)', 'rgba(199, 120, 221, 0.5)', 'rgba(199, 120, 221, 0)'] }}
-                  transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                  animate={reduceHeroOnMobile ? {} : { borderColor: ['rgba(199, 120, 221, 0)', 'rgba(199, 120, 221, 0.5)', 'rgba(199, 120, 221, 0)'] }}
+                  transition={reduceHeroOnMobile ? { duration: 0 } : { duration: 2, repeat: Infinity, ease: 'easeInOut' }}
                 />
                 <span className="relative z-10 flex items-center gap-2">
                   <motion.svg 
@@ -307,8 +321,8 @@ export const Hero = () => {
                     fill="none" 
                     stroke="currentColor" 
                     strokeWidth="2"
-                    animate={{ y: [0, 4, 0], x: [0, 2, 0] }}
-                    transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+                    animate={reduceHeroOnMobile ? {} : { y: [0, 4, 0], x: [0, 2, 0] }}
+                    transition={reduceHeroOnMobile ? { duration: 0 } : { duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
                   >
                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                     <polyline points="7 10 12 15 17 10" />
@@ -335,17 +349,19 @@ export const Hero = () => {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-12 h-12 rounded-lg border border-[#c778dd]/30 flex items-center justify-center text-[#c778dd] bg-gradient-to-br from-[#c778dd]/10 to-[#5b9eff]/5 backdrop-blur-sm hover:border-[#c778dd] transition-all relative overflow-hidden"
-                    whileHover={{ scale: 1.3, y: -10, boxShadow: '0 15px 35px rgba(199, 120, 221, 0.6)' }}
+                    className={`w-12 h-12 rounded-lg border border-[#c778dd]/30 flex items-center justify-center text-[#c778dd] ${reduceHeroOnMobile ? 'bg-[#c778dd]/10' : 'bg-gradient-to-br from-[#c778dd]/10 to-[#5b9eff]/5 backdrop-blur-sm'} hover:border-[#c778dd] transition-all relative overflow-hidden`}
+                    whileHover={reduceHeroOnMobile ? {} : { scale: 1.3, y: -10, boxShadow: '0 15px 35px rgba(199, 120, 221, 0.6)' }}
                     whileTap={{ scale: 0.8 }}
                     title={social.label}
-                    animate={{ 
+                    animate={reduceHeroOnMobile ? {} : liteHeroOnMobile ? {
+                      y: [0, -2, 0]
+                    } : {
                       y: [0, -6, 0],
                       x: [0, 2, -2, 0],
                       rotate: [0, 5, -5, 0]
                     }}
-                    transition={{ 
-                      duration: 3,
+                    transition={reduceHeroOnMobile ? { duration: 0 } : {
+                      duration: liteHeroOnMobile ? 4.5 : 3,
                       repeat: Infinity,
                       ease: 'easeInOut',
                       delay: idx * 0.15
@@ -354,7 +370,7 @@ export const Hero = () => {
                     <motion.div
                       className="absolute inset-0 bg-white/20 rounded-lg"
                       initial={{ opacity: 0, scale: 0 }}
-                      whileHover={{ opacity: 1, scale: 2 }}
+                      whileHover={reduceHeroOnMobile ? {} : { opacity: 1, scale: 2 }}
                       transition={{ duration: 0.3 }}
                     />
                     <Icon size={20} className="relative z-10" />
@@ -370,36 +386,55 @@ export const Hero = () => {
             initial="hidden"
             animate="visible"
             className="relative w-full h-96 sm:h-80 md:h-96 lg:h-full flex items-center justify-center order-first md:order-last md:-mt-48 lg:-mt-64"
-            style={{ y: isMobile ? 0 : profileY }}
+            style={{ y: reduceHeroOnMobile ? 0 : profileY }}
             transition={{ duration: 0.6, ease: 'easeOut', type: 'spring', stiffness: 100 }}
           >
             {/* Dual glow backgrounds */}
-            <motion.div
-              className="absolute inset-0 flex items-center justify-center"
-              animate={{
-                scale: isMobile ? [1, 1.15, 1] : [1, 1.3, 0.9, 1.2, 1],
-                opacity: isMobile ? [0.5, 0.7, 0.5] : [0.6, 0.9, 0.2, 0.8, 0.6],
-                rotate: isMobile ? [0, 180, 360] : [0, 45, 90, 135, 180]
-              }}
-              transition={{ duration: isMobile ? 15 : 8, repeat: Infinity, ease: 'easeInOut' }}
-            >
-              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-[#c778dd]/50 via-transparent to-[#5b9eff]/50 blur-3xl" />
-            </motion.div>
+            {reduceHeroOnMobile ? (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="absolute w-72 h-72 rounded-full bg-gradient-to-br from-[#c778dd]/20 to-[#5b9eff]/20" />
+              </div>
+            ) : liteHeroOnMobile ? (
+              <motion.div
+                className="absolute inset-0 flex items-center justify-center"
+                animate={{
+                  scale: [1, 1.08, 1],
+                  opacity: [0.35, 0.55, 0.35],
+                }}
+                transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }}
+              >
+                <div className="absolute inset-8 rounded-full bg-gradient-to-br from-[#c778dd]/30 to-[#5b9eff]/25 blur-2xl" />
+              </motion.div>
+            ) : (
+              <>
+                <motion.div
+                  className="absolute inset-0 flex items-center justify-center"
+                  animate={{
+                    scale: [1, 1.3, 0.9, 1.2, 1],
+                    opacity: [0.6, 0.9, 0.2, 0.8, 0.6],
+                    rotate: [0, 45, 90, 135, 180]
+                  }}
+                  transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+                >
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-br from-[#c778dd]/50 via-transparent to-[#5b9eff]/50 blur-3xl" />
+                </motion.div>
 
-            <motion.div
-              className="absolute inset-0 flex items-center justify-center"
-              animate={{
-                scale: isMobile ? [1.1, 1.25, 1.1] : [1.2, 1.4, 0.95, 1.25, 1.2],
-                opacity: isMobile ? [0.2, 0.4, 0.2] : [0.25, 0.5, 0.1, 0.4, 0.25],
-                rotate: isMobile ? [-180, 0, 180] : [-45, 0, 45, 90, -45]
-              }}
-              transition={{ duration: isMobile ? 18 : 10, repeat: Infinity, ease: 'easeInOut', delay: 0.3 }}
-            >
-              <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-[#5b9eff]/40 to-[#c778dd]/40 blur-3xl" />
-            </motion.div>
+                <motion.div
+                  className="absolute inset-0 flex items-center justify-center"
+                  animate={{
+                    scale: [1.2, 1.4, 0.95, 1.25, 1.2],
+                    opacity: [0.25, 0.5, 0.1, 0.4, 0.25],
+                    rotate: [-45, 0, 45, 90, -45]
+                  }}
+                  transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 0.3 }}
+                >
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-[#5b9eff]/40 to-[#c778dd]/40 blur-3xl" />
+                </motion.div>
+              </>
+            )}
 
             {/* Animated Particles around profile */}
-            {[0, 1, 2, 3, 4].map((idx) => (
+            {!reduceHeroOnMobile && (liteHeroOnMobile ? [0, 1] : [0, 1, 2, 3, 4]).map((idx) => (
               <motion.div
                 key={`particle-${idx}`}
                 className="absolute w-1.5 h-1.5 rounded-full bg-gradient-to-br from-[#c778dd] to-[#5b9eff] z-20"
@@ -417,7 +452,7 @@ export const Hero = () => {
                   opacity: [0.3, 0.8, 0.3],
                 }}
                 transition={{
-                  duration: 4 + idx * 0.5,
+                  duration: liteHeroOnMobile ? 6 + idx * 0.4 : 4 + idx * 0.5,
                   repeat: Infinity,
                   ease: 'easeInOut',
                   delay: idx * 0.2,
@@ -426,12 +461,15 @@ export const Hero = () => {
             ))}
 
             {/* Floating coding icons around the profile */}
-            {[
+            {!reduceHeroOnMobile && (liteHeroOnMobile ? [
+              { icon: Code2, top: '16%', right: '-6px', delay: 0 },
+              { icon: Database, bottom: '18%', left: '-6px', delay: 1.2 },
+            ] : [
               { icon: Code2, top: '15%', right: '-8px', delay: 0 },
               { icon: Database, bottom: '20%', right: '-8px', delay: 1 },
               { icon: Zap, bottom: '15%', left: '-8px', delay: 2 },
               { icon: GitBranch, top: '20%', left: '-8px', delay: 1.5 },
-            ].map((item, idx) => {
+            ]).map((item, idx) => {
               const Icon = item.icon;
               return (
                 <motion.div
@@ -444,10 +482,10 @@ export const Hero = () => {
                     left: item.left,
                   }}
                   animate={{
-                    y: [0, -12, 0],
+                    y: liteHeroOnMobile ? [0, -6, 0] : [0, -12, 0],
                   }}
                   transition={{
-                    duration: 3,
+                    duration: liteHeroOnMobile ? 4.5 : 3,
                     repeat: Infinity,
                     ease: 'easeInOut',
                     delay: item.delay,
@@ -462,12 +500,12 @@ export const Hero = () => {
             {/* Profile Image Circle */}
             <motion.div
               className="relative w-56 h-56 sm:w-64 sm:h-64 md:w-72 md:h-72 lg:w-72 lg:h-72 xl:w-80 xl:h-80 z-10 rounded-full overflow-hidden shadow-2xl shadow-[#c778dd]/30"
-              whileHover={isMobile ? {} : { scale: 1.12 }}
-              animate={{ 
-                boxShadow: isMobile ? ['0 0 15px rgba(199, 120, 221, 0.2)', '0 0 25px rgba(199, 120, 221, 0.4)'] : ['0 0 20px rgba(199, 120, 221, 0.3)', '0 0 40px rgba(199, 120, 221, 0.6)']
+              whileHover={reduceHeroOnMobile ? {} : { scale: 1.12 }}
+              animate={reduceHeroOnMobile ? {} : {
+                boxShadow: ['0 0 20px rgba(199, 120, 221, 0.3)', '0 0 40px rgba(199, 120, 221, 0.6)']
               }}
               transition={{ 
-                boxShadow: { duration: 2, repeat: Infinity, ease: 'easeInOut' },
+                boxShadow: reduceHeroOnMobile ? { duration: 0 } : { duration: 2, repeat: Infinity, ease: 'easeInOut' },
                 scale: { type: 'spring', stiffness: 200, damping: 20 },
               }}
             >
@@ -478,7 +516,7 @@ export const Hero = () => {
                   rotate: 360,
                 }}
                 transition={{
-                  rotate: { duration: isMobile ? 50 : 35, repeat: Infinity, ease: 'linear' },
+                  rotate: { duration: reduceHeroOnMobile ? 50 : 35, repeat: Infinity, ease: 'linear' },
                 }}
                 style={{
                   borderImage: 'linear-gradient(135deg, #c778dd, #5b9eff, #c778dd) 1',
@@ -497,10 +535,10 @@ export const Hero = () => {
         </div>
 
         {/* Scroll indicator */}
-        <motion.div
+        {!reduceHeroOnMobile && <motion.div
           className="absolute -bottom-4 sm:bottom-5 md:bottom-24 left-1/2 -translate-x-1/2 -ml-16"
-          animate={{ y: isMobile ? [0, 15, 0] : [0, 20, 0] }}
-          transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
+          animate={{ y: liteHeroOnMobile ? [0, 10, 0] : [0, 20, 0] }}
+          transition={{ duration: liteHeroOnMobile ? 4.5 : 3.5, repeat: Infinity, ease: 'easeInOut' }}
         >
           <motion.div 
             className="text-center flex flex-col items-center gap-2"
@@ -509,16 +547,16 @@ export const Hero = () => {
           >
             <div className="text-xs font-semibold tracking-widest uppercase text-[#c778dd]">Scroll to explore</div>
             <motion.div
-              animate={isMobile ? { y: [0, 8, 0] } : { 
+              animate={{ 
                 y: [0, 10, 0],
                 rotate: [0, 5, -5, 0]
               }}
-              transition={{ duration: isMobile ? 2 : 2, repeat: Infinity, ease: 'easeInOut' }}
+              transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
               className="relative"
             >
               <motion.div
                 className="absolute -inset-3 bg-gradient-to-br from-[#c778dd]/20 to-[#5b9eff]/20 rounded-full blur-lg"
-                animate={isMobile ? { scale: [1, 1.15, 1] } : { 
+                animate={{ 
                   scale: [1, 1.3, 1],
                   opacity: [0.3, 0.6, 0.3]
                 }}
@@ -527,7 +565,7 @@ export const Hero = () => {
               <Mouse className="w-6 h-6 text-[#c778dd] relative z-10" strokeWidth={2} />
             </motion.div>
           </motion.div>
-        </motion.div>
+        </motion.div>}
       </motion.div>
     </section>
   );
