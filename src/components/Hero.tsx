@@ -3,7 +3,7 @@ import { Code2, Trophy, Rocket, Github, Linkedin, Database, GitBranch, Zap, Inst
 import { TextReveal } from './TextReveal';
 import { useEffect, useState, useRef } from 'react';
 
-const profileImage = new URL('../Public/IMG_3465.jpeg', import.meta.url).href;
+const profileImage = new URL('../Public/My Picture.jpg', import.meta.url).href;
 
 const XLogo = ({ size = 20, className = '' }: { size?: number; className?: string }) => (
   <svg
