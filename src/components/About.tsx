@@ -72,19 +72,29 @@ export const About = () => {
             className="grid md:grid-cols-2 gap-12 mb-24 items-center"
           >
             {/* Story Text */}
-            <div
+            <motion.div
               className="relative"
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
             >
               {/* Accent line */}
               <div
                 className="absolute -left-8 top-0 w-1 h-32 bg-gradient-to-b from-[#5b9eff] to-transparent rounded-full"
               />
               
-              <h3 className="text-4xl font-bold mb-8 relative">
+              <motion.h3 
+                className="text-4xl font-bold mb-8 relative"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1, duration: 0.6 }}
+                viewport={{ once: true }}
+              >
                 <span>
                   👋 My Story
                 </span>
-              </h3>
+              </motion.h3>
               
               <div className="space-y-6">
                 {[
@@ -92,15 +102,19 @@ export const About = () => {
                   "With over 3+ years of experience, I've developed 20+ projects ranging from responsive e-commerce platforms to complex full-stack applications. I'm passionate about clean architecture, responsive design, and creating smooth user experiences that delight end-users.",
                   "Beyond coding, I'm committed to continuous learning, staying updated with modern technologies, and contributing to the developer community. Let's collaborate and build something amazing together!"
                 ].map((text, idx) => (
-                  <p
+                  <motion.p
                     key={idx}
                     className="text-gray-400 text-lg leading-relaxed"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.15 + idx * 0.1, duration: 0.6 }}
+                    viewport={{ once: true }}
                   >
                     {text}
-                  </p>
+                  </motion.p>
                 ))}
               </div>
-            </div>
+            </motion.div>
 
             {/* Stats Grid with Premium Styling */}
             <motion.div 
