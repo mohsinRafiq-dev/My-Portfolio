@@ -18,7 +18,7 @@ export const FloatingShape = ({
   type = 'circle',
   size = 100,
   color = '#c778dd',
-  duration = 8,
+  duration = 10,
   delay = 0,
   className = '',
   style,
@@ -26,16 +26,14 @@ export const FloatingShape = ({
   const shapeStyle = {
     width: size,
     height: size,
-    opacity: 0.3,
-    filter: `blur(${size / 10}px)`,
+    opacity: 0.25,
     ...style,
   };
 
   const floatVariants = {
     animate: {
-      y: [0, -30, 0],
-      x: [0, 15, 0],
-      rotate: [0, 360],
+      y: [0, -25, 0],
+      x: [0, 12, 0],
     },
   };
 
@@ -70,8 +68,7 @@ export const FloatingShape = ({
               borderLeft: `${size / 2}px solid transparent`,
               borderRight: `${size / 2}px solid transparent`,
               borderBottom: `${size}px solid ${color}`,
-              opacity: 0.3,
-              filter: `blur(${size / 10}px)`,
+              opacity: 0.25,
             }}
           />
         );
@@ -81,12 +78,11 @@ export const FloatingShape = ({
             width={size}
             height={size}
             viewBox="0 0 100 100"
-            style={{ opacity: 0.3 }}
+            style={{ opacity: 0.25 }}
           >
             <path
               d="M50,10 Q90,30 90,50 Q90,80 50,90 Q10,80 10,50 Q10,30 50,10"
               fill={color}
-              style={{ filter: `blur(${size / 10}px)` }}
             />
           </svg>
         );

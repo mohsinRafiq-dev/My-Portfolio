@@ -44,6 +44,7 @@ export const StaggeredText = ({
               marginRight: '0.3em',
               color: isHighlighted ? highlightColor : 'inherit',
               fontWeight: isHighlighted ? '600' : 'inherit',
+              willChange: 'opacity, transform',
             }}
           >
             {word}

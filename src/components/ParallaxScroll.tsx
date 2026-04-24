@@ -3,17 +3,17 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 
 interface ParallaxScrollProps {
   children: React.ReactNode;
-  offset?: number; // Parallax offset amount (default 50)
+  offset?: number; // Parallax offset amount (default 30 - reduced from 50)
   className?: string;
 }
 
 /**
- * ParallaxScroll - Creates parallax effect where element moves slower than scroll
+ * ParallaxScroll - Creates parallax effect where element moves slower than scroll (OPTIMIZED)
  * Use for background orbs, decorative elements, or subtle depth effects
  */
 export const ParallaxScroll = ({ 
   children, 
-  offset = 50,
+  offset = 30,
   className = '' 
 }: ParallaxScrollProps) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -28,7 +28,7 @@ export const ParallaxScroll = ({
   return (
     <motion.div 
       ref={ref}
-      style={{ y }}
+      style={{ y, willChange: 'transform' }}
       className={className}
     >
       {children}
@@ -37,16 +37,16 @@ export const ParallaxScroll = ({
 };
 
 /**
- * ParallaxElement - Wraps any element with parallax effect
+ * ParallaxElement - Wraps any element with parallax effect (OPTIMIZED)
  * Automatically detects scroll and applies offset
  */
 export const ParallaxElement = ({ 
   children, 
-  rate = 0.5,
+  rate = 0.3,
   className = '' 
 }: { 
   children: React.ReactNode; 
-  rate?: number; // Scroll rate (0-1, where 0.5 = half speed)
+  rate?: number; // Scroll rate (0-1, where 0.3 = third speed)
   className?: string;
 }) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -57,7 +57,7 @@ export const ParallaxElement = ({
   return (
     <motion.div 
       ref={ref}
-      style={{ y }}
+      style={{ y, willChange: 'transform' }}
       className={className}
     >
       {children}

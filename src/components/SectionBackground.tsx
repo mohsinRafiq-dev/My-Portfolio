@@ -58,59 +58,15 @@ export const SectionBackground = ({ variant = 'default' }: SectionBackgroundProp
 
     projects: (
       <div className="absolute inset-0 -z-10 overflow-hidden">
-        {/* Animated corner orbs */}
-        <motion.div
-          className="absolute -top-20 -right-20 w-96 h-96 bg-gradient-to-b from-[#c778dd]/20 to-transparent rounded-full blur-3xl"
-          animate={{
-            y: [0, -50, 0],
-            scale: [1, 1.1, 1],
-            rotate: [0, 180, 360],
-          }}
-          transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
-        />
-
-        <motion.div
-          className="absolute -bottom-20 -left-20 w-96 h-96 bg-gradient-to-t from-[#5b9eff]/20 to-transparent rounded-full blur-3xl"
-          animate={{
-            y: [0, 50, 0],
-            scale: [1, 0.9, 1],
-            rotate: [360, 180, 0],
-          }}
-          transition={{ duration: 35, repeat: Infinity, ease: 'linear' }}
-        />
-
-        {/* Center pulsing orb */}
-        <motion.div
-          className="absolute top-1/2 left-1/2 w-72 h-72 bg-[#c778dd]/15 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"
-          animate={{
-            scale: [1, 1.4, 1],
-            opacity: [0.2, 0.4, 0.2],
-          }}
-          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-        />
-
-        {/* Floating particles */}
-        {[...Array(15)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-[#c778dd]/40 rounded-full"
-            animate={{
-              y: [Math.random() * 100, Math.random() * -100],
-              x: [Math.random() * 50, Math.random() * -50],
-              opacity: [0.4, 0.1],
-            }}
-            transition={{
-              duration: 4 + Math.random() * 4,
-              repeat: Infinity,
-              delay: Math.random() * 2,
-              ease: 'easeInOut',
-            }}
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-          />
-        ))}
+        {/* Grid overlay */}
+        <svg className="absolute inset-0 w-full h-full opacity-[0.02]" preserveAspectRatio="none">
+          <defs>
+            <pattern id="grid-projects" width="40" height="40" patternUnits="userSpaceOnUse">
+              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#c778dd" strokeWidth="0.5" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#grid-projects)" />
+        </svg>
       </div>
     ),
 
@@ -158,56 +114,15 @@ export const SectionBackground = ({ variant = 'default' }: SectionBackgroundProp
 
     contact: (
       <div className="absolute inset-0 -z-10 overflow-hidden">
-        {/* Central glowing orbs for contact section */}
-        <motion.div
-          className="absolute top-1/3 left-1/4 w-72 h-72 bg-gradient-to-br from-[#c778dd]/20 to-transparent rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.3, 1],
-            rotate: [0, 180, 360],
-            opacity: [0.4, 0.6, 0.4],
-          }}
-          transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
-        />
-
-        <motion.div
-          className="absolute bottom-1/3 right-1/4 w-72 h-72 bg-gradient-to-tl from-[#5b9eff]/20 to-transparent rounded-full blur-3xl"
-          animate={{
-            scale: [1, 0.8, 1],
-            rotate: [360, 180, 0],
-            opacity: [0.4, 0.6, 0.4],
-          }}
-          transition={{ duration: 25, repeat: Infinity, ease: 'easeInOut' }}
-        />
-
-        {/* Pulsing center accent */}
-        <motion.div
-          className="absolute top-1/2 left-1/2 w-80 h-80 bg-[#c778dd]/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"
-          animate={{
-            scale: [1, 1.2, 1],
-          }}
-          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-        />
-
-        {/* Interactive particle trail effect */}
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-0.5 h-0.5 bg-[#c778dd]/50 rounded-full"
-            animate={{
-              y: [0, Math.random() * 200 - 100],
-              opacity: [0.5, 0],
-            }}
-            transition={{
-              duration: 3 + Math.random() * 3,
-              repeat: Infinity,
-              delay: Math.random() * 2,
-            }}
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-          />
-        ))}
+        {/* Grid overlay */}
+        <svg className="absolute inset-0 w-full h-full opacity-[0.02]" preserveAspectRatio="none">
+          <defs>
+            <pattern id="grid-contact" width="40" height="40" patternUnits="userSpaceOnUse">
+              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#c778dd" strokeWidth="0.5" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#grid-contact)" />
+        </svg>
       </div>
     ),
 

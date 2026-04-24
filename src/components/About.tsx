@@ -29,30 +29,18 @@ export const About = () => {
       {/* Impressive background */}
       {!isMobile && <SectionBackground variant="about" />}
 
-      {/* Animated background orbs - hidden on mobile */}
+      {/* Background orbs - hidden on mobile */}
       {!isMobile && (
         <>
-          <motion.div
+          <div
             className="absolute top-40 right-10 w-96 h-96 rounded-full blur-3xl opacity-25"
-            animate={{ 
-              y: [0, 60, 0],
-              x: [0, 40, 0],
-              scale: [1, 1.2, 1]
-            }}
-            transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }}
             style={{
               background: 'linear-gradient(135deg, #c778dd, #5b9eff)'
             }}
           />
 
-          <motion.div
+          <div
             className="absolute bottom-40 left-10 w-80 h-80 rounded-full blur-3xl opacity-20"
-            animate={{ 
-              y: [0, -50, 0],
-              x: [0, -30, 0],
-              scale: [1, 1.15, 1]
-            }}
-            transition={{ duration: 16, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
             style={{
               background: 'linear-gradient(135deg, #5b9eff, #c778dd)'
             }}
@@ -62,69 +50,40 @@ export const About = () => {
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Head */}
-        <motion.div
+        <div
           className="text-center mb-20"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
         >
-          <motion.span 
+          <span 
             className="text-[#5b9eff] font-semibold text-sm uppercase tracking-widest mb-4 block"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ delay: 0.1 }}
-            viewport={{ once: true }}
           >
             👤 About Me
-          </motion.span>
+          </span>
           <AnimatedTitle>Who I Am</AnimatedTitle>
-          <motion.p 
+          <p 
             className="text-gray-400 text-lg mt-6 max-w-2xl mx-auto"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            viewport={{ once: true }}
           >
             A passionate developer crafting beautiful, performant digital experiences with modern technologies
-          </motion.p>
-        </motion.div>
+          </p>
+        </div>
 
         <div className="max-w-6xl mx-auto">
-          {/* My Story with Animated Background */}
-          <motion.div
+          {/* My Story */}
+          <div
             className="grid md:grid-cols-2 gap-12 mb-24 items-center"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
           >
             {/* Story Text */}
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
+            <div
               className="relative"
             >
-              {/* Animated accent line */}
-              <motion.div
+              {/* Accent line */}
+              <div
                 className="absolute -left-8 top-0 w-1 h-32 bg-gradient-to-b from-[#5b9eff] to-transparent rounded-full"
-                initial={{ height: 0 }}
-                whileInView={{ height: 128 }}
-                transition={{ duration: 1.5, delay: 0.2 }}
-                viewport={{ once: true }}
               />
               
               <h3 className="text-4xl font-bold mb-8 relative">
-                <motion.span
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6 }}
-                  viewport={{ once: true }}
-                >
+                <span>
                   👋 My Story
-                </motion.span>
+                </span>
               </h3>
               
               <div className="space-y-6">
@@ -133,19 +92,15 @@ export const About = () => {
                   "With over 3+ years of experience, I've developed 20+ projects ranging from responsive e-commerce platforms to complex full-stack applications. I'm passionate about clean architecture, responsive design, and creating smooth user experiences that delight end-users.",
                   "Beyond coding, I'm committed to continuous learning, staying updated with modern technologies, and contributing to the developer community. Let's collaborate and build something amazing together!"
                 ].map((text, idx) => (
-                  <motion.p
+                  <p
                     key={idx}
                     className="text-gray-400 text-lg leading-relaxed"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: idx * 0.1 }}
-                    viewport={{ once: true }}
                   >
                     {text}
-                  </motion.p>
+                  </p>
                 ))}
               </div>
-            </motion.div>
+            </div>
 
             {/* Stats Grid with Premium Styling */}
             <motion.div 
@@ -158,7 +113,7 @@ export const About = () => {
               {[
                 { number: 3, label: 'Years Experience', suffix: '+', icon: '🚀' },
                 { number: 20, label: 'Projects Built', suffix: '+', icon: '💻' },
-                { number: 100, label: 'Dedication', suffix: '%', icon: '❤️' },
+                { number: 100, label: 'Code Quality', suffix: '%', icon: '❤️' },
                 { number: 10, label: 'Happy Clients', suffix: '+', icon: '😊' },
               ].map((stat, idx) => (
                 <motion.div
@@ -169,7 +124,7 @@ export const About = () => {
                   transition={{ delay: idx * 0.12, duration: 0.6 }}
                   viewport={{ once: true }}
                 >
-                  {/* Top animated bar */}
+                  {/* Top bar */}
                   <motion.div
                     className="h-1 rounded-full bg-gradient-to-r from-[#5b9eff] to-[#c778dd] mb-4 overflow-hidden"
                     initial={{ width: '0%' }}
@@ -180,7 +135,7 @@ export const About = () => {
                   
                   {/* Stat Card */}
                   <motion.div
-                    className="p-6 rounded-2xl backdrop-blur-xl border border-white/10 h-full relative overflow-hidden"
+                    className="p-6 rounded-2xl backdrop-blur-xl border border-white/10 h-full relative overflow-hidden hover:border-white/20 hover:shadow-lg hover:scale-105 transition-all"
                     style={{
                       background: 'linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01))'
                     }}
@@ -194,16 +149,6 @@ export const About = () => {
                     {/* Icon */}
                     <motion.div
                       className="text-3xl mb-3"
-                      animate={{
-                        scale: [1, 1.15, 1],
-                        y: [0, -5, 0]
-                      }}
-                      transition={{
-                        duration: 2.5,
-                        repeat: Infinity,
-                        delay: idx * 0.15,
-                        ease: 'easeInOut'
-                      }}
                     >
                       {stat.icon}
                     </motion.div>
@@ -239,7 +184,7 @@ export const About = () => {
                 </motion.div>
               ))}
             </motion.div>
-          </motion.div>
+          </div>
 
           {/* Core Values Section */}
           <motion.div
@@ -298,10 +243,8 @@ export const About = () => {
                       transition={{ delay: idx * 0.15 + 0.15, duration: 0.8 }}
                       viewport={{ once: true }}
                     >
-                      <motion.div
-                        className={`h-full bg-gradient-to-r ${value.color}`}
-                        animate={{ opacity: [0.5, 1, 0.5] }}
-                        transition={{ duration: 2.5, repeat: Infinity, delay: idx * 0.15 }}
+                      <div
+                        className={`h-full bg-gradient-to-r ${value.color} w-full`}
                       />
                     </motion.div>
 
@@ -319,22 +262,11 @@ export const About = () => {
                       }}
                     >
                       {/* Icon Container */}
-                      <motion.div
+                      <div
                         className={`w-16 h-16 rounded-xl bg-gradient-to-br ${value.color} flex items-center justify-center mb-6 flex-shrink-0`}
-                        animate={{
-                          scale: [1, 1.1, 1],
-                          y: [0, -8, 0]
-                        }}
-                        transition={{
-                          duration: 3,
-                          repeat: Infinity,
-                          delay: idx * 0.2,
-                          ease: 'easeInOut'
-                        }}
-                        whileHover={{ scale: 1.2 }}
                       >
                         <IconComponent size={28} className="text-white" strokeWidth={1.5} />
-                      </motion.div>
+                      </div>
 
                       {/* Title */}
                       <motion.h4
@@ -378,9 +310,6 @@ export const About = () => {
                           whileInView={{ width: '100%' }}
                           transition={{ delay: idx * 0.15 + 0.25, duration: 1 }}
                           viewport={{ once: true }}
-                          animate={{
-                            opacity: [0.6, 1, 0.6]
-                          }}
                         />
                       </motion.div>
 

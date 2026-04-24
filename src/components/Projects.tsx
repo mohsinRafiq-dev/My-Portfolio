@@ -167,30 +167,18 @@ export const Projects = () => {
     <section id="projects" className="py-32 relative overflow-hidden bg-transparent">
       {!isMobile && <SectionBackground variant="projects" />}
 
-      {/* Enhanced animated background orbs - hidden on mobile */}
+      {/* Background orbs - hidden on mobile */}
       {!isMobile && (
         <>
-          <motion.div
+          <div
             className="absolute top-40 right-0 w-96 h-96 rounded-full blur-3xl opacity-25"
-            animate={{
-              y: [0, 60, 0],
-              x: [0, 40, 0],
-              scale: [1, 1.2, 1]
-            }}
-            transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }}
             style={{
               background: 'linear-gradient(135deg, #c778dd, #5b9eff)'
             }}
           />
 
-          <motion.div
+          <div
             className="absolute bottom-20 left-0 w-80 h-80 rounded-full blur-3xl opacity-20"
-            animate={{ 
-              y: [0, -40, 0],
-              x: [0, -25, 0],
-              scale: [1, 1.15, 1]
-            }}
-            transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut', delay: 1.2 }}
             style={{
               background: 'linear-gradient(135deg, #5b9eff, #c778dd)'
             }}
@@ -200,44 +188,28 @@ export const Projects = () => {
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Head */}
-        <motion.div
+        <div
           className="max-w-3xl mx-auto text-center mb-20"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
         >
-          <motion.span 
+          <span 
             className="text-[#5b9eff] font-semibold text-sm uppercase tracking-widest mb-4 block"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ delay: 0.1 }}
-            viewport={{ once: true }}
           >
             💼 My Work
-          </motion.span>
+          </span>
           <AnimatedTitle>Featured Projects</AnimatedTitle>
-          <motion.p 
+          <p 
             className="text-gray-400 text-lg mt-6 max-w-2xl mx-auto"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            viewport={{ once: true }}
           >
             A collection of projects showcasing my technical expertise and creative problem-solving
-          </motion.p>
-        </motion.div>
+          </p>
+        </div>
 
-        {/* Filter Buttons with enhanced styling */}
-        <motion.div
+        {/* Filter Buttons */}
+        <div
           className="flex justify-center gap-3 mb-16 flex-wrap"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          viewport={{ once: true }}
         >
             {categories.map((cat) => (
-            <motion.button
+            <button
               key={cat.id}
               onClick={() => setActiveFilter(cat.id)}
               className={`px-5 py-2 rounded-lg font-medium text-sm transition-all relative overflow-hidden group ${
@@ -245,152 +217,105 @@ export const Projects = () => {
                   ? 'bg-gradient-to-r from-[#5b9eff] to-[#c778dd] text-white shadow-lg'
                   : 'border border-white/20 text-gray-400 hover:border-white/40 hover:text-white'
               }`}
-              whileHover={isMobile ? {} : { scale: 1.08, y: -2 }}
-              whileTap={isMobile ? {} : { scale: 0.92 }}
-              animate={!isMobile && activeFilter === cat.id ? {
-                boxShadow: [
-                  '0 0 15px rgba(91, 158, 255, 0.4)',
-                  '0 0 30px rgba(199, 120, 221, 0.6)',
-                  '0 0 15px rgba(91, 158, 255, 0.4)'
-                ]
-              } : {}}
-              transition={!isMobile && activeFilter === cat.id ? { duration: 2, repeat: Infinity } : { duration: 0.2 }}
             >
               {cat.label}
-            </motion.button>
+            </button>
           ))}
-        </motion.div>
+        </div>
 
-        {/* Projects Grid with Bar Animation */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        {/* Projects Grid */}
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          viewport={{ once: true }}
+        >
           {filteredProjects.map((project, idx) => (
             <motion.div
               key={project.id}
               className="group relative"
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.1, duration: 0.5 }}
+              transition={{ delay: idx * 0.1, duration: 0.6 }}
               viewport={{ once: true }}
             >
               {/* Project Card */}
-              <motion.div
-                className={`relative rounded-2xl border border-white/10 ${isMobile ? '' : 'backdrop-blur-xl'} overflow-hidden group/card h-full flex flex-col bg-gradient-to-br from-white/5 to-white/2 shadow-lg`}
-                whileHover={isMobile ? {} : {
-                  borderColor: 'rgba(199, 120, 221, 0.6)',
-                  boxShadow: '0 25px 50px rgba(199, 120, 221, 0.3), 0 0 40px rgba(199, 120, 221, 0.2)',
-                  y: -8,
-                  transition: { type: 'spring', stiffness: 300, damping: 20 }
-                }}
+              <div
+                className={`relative rounded-2xl border border-white/10 ${isMobile ? '' : 'backdrop-blur-xl'} overflow-hidden group/card h-full flex flex-col bg-gradient-to-br from-white/5 to-white/2 shadow-lg hover:border-[#c778dd]/60 hover:shadow-lg transition-all duration-300 hover:-translate-y-2`}
               >
                 {/* Large Project Image Section */}
-                <motion.div 
+                <div 
                   className={`h-72 ${!project.imageUrl ? project.image : 'bg-gradient-to-br from-gray-900 to-black'} relative overflow-hidden flex items-center justify-center group`}
-                  whileHover={isMobile ? undefined : 'hover'}
-                  initial="initial"
-                  variants={{
-                    initial: {},
-                    hover: {}
-                  }}
                 >
-                  {/* Image with proper scaling */}
+                  {/* Image */}
                   {project.imageUrl && (
-                    <motion.img 
+                    <img 
                       src={project.imageUrl}
                       alt={project.title}
-                      className="h-full w-full object-cover"
-                      variants={{
-                        initial: { scale: 1, filter: 'blur(0px)' },
-                        hover: { scale: 1.15, filter: 'blur(6px)' }
-                      }}
-                      transition={{ duration: 0.5, ease: 'easeOut' }}
+                      className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-500"
                     />
                   )}
                   
-                  {/* Overlay with gradient and icons on hover */}
+                  {/* Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent z-5" />
                   
                   {/* Featured Badge */}
                   {project.featured && (
-                    <motion.div
+                    <div
                       className={`absolute top-4 right-4 px-4 py-2 rounded-full text-xs font-bold text-white bg-gradient-to-r ${project.color} z-20 shadow-lg`}
-                      initial={{ opacity: 0, scale: 0 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: idx * 0.1 + 0.2 }}
-                      viewport={{ once: true }}
                     >
                       Featured
-                    </motion.div>
+                    </div>
                   )}
                   
-                  
-                  {/* Hover Icons Overlay - NOT Blurred */}
-                  <motion.div
-                    className={`absolute inset-0 ${isMobile ? 'hidden' : 'flex'} items-center justify-center gap-6 z-30`}
-                    variants={{
-                      initial: { opacity: 0 },
-                      hover: { opacity: 1 }
-                    }}
-                    transition={{ duration: 0.3 }}
+                  {/* Hover Icons Overlay */}
+                  <div
+                    className={`absolute inset-0 ${isMobile ? 'hidden' : 'flex'} items-center justify-center gap-6 z-30 opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
                   >
                     {/* GitHub Link Icon */}
-                    <motion.a
+                    <a
                       href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-lg border-2 border-white/50 flex items-center justify-center text-white shadow-xl"
-                      whileHover={{ scale: 1.2, backgroundColor: 'rgba(255,255,255,0.3)', borderColor: 'rgba(199,120,221,1)' }}
-                      whileTap={{ scale: 0.95 }}
+                      className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-lg border-2 border-white/50 flex items-center justify-center text-white shadow-xl hover:scale-110 hover:bg-white/30 hover:border-[#c778dd] transition-all"
                       title="View Code"
                     >
                       <Github size={20} />
-                    </motion.a>
+                    </a>
 
                     {/* Live Link Icon */}
-                    <motion.a
+                    <a
                       href={project.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-lg border-2 border-white/50 flex items-center justify-center text-white shadow-xl"
-                      whileHover={{ scale: 1.2, backgroundColor: 'rgba(255,255,255,0.3)', borderColor: 'rgba(199,120,221,1)' }}
-                      whileTap={{ scale: 0.95 }}
+                      className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-lg border-2 border-white/50 flex items-center justify-center text-white shadow-xl hover:scale-110 hover:bg-white/30 hover:border-[#c778dd] transition-all"
                       title="View Live"
                     >
                       <ArrowRight size={20} />
-                    </motion.a>
-                  </motion.div>
-                </motion.div>
+                    </a>
+                  </div>
+                </div>
 
                 {/* Card Content */}
                 <div className="p-6 flex flex-col flex-grow">
                   {/* Title */}
-                  <motion.h3
+                  <h3
                     className="text-2xl font-bold text-white mb-3"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    transition={{ delay: idx * 0.1 + 0.1 }}
-                    viewport={{ once: true }}
                   >
                     {project.title}
-                  </motion.h3>
+                  </h3>
 
                   {/* Description */}
-                  <motion.p
+                  <p
                     className="text-sm text-gray-400 leading-relaxed mb-4 flex-grow"
-                    initial={{ opacity: 0.5 }}
-                    whileInView={{ opacity: 1 }}
-                    transition={{ delay: idx * 0.1 + 0.15 }}
-                    viewport={{ once: true }}
                   >
                     {project.description}
-                  </motion.p>
+                  </p>
 
                   {/* Tech Stack */}
-                  <motion.div
+                  <div
                     className="flex flex-wrap gap-2 mb-6"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    transition={{ delay: idx * 0.1 + 0.2 }}
-                    viewport={{ once: true }}
                   >
                     {project.tech.map((tech, i) => (
                       <span
@@ -400,56 +325,48 @@ export const Projects = () => {
                         {tech}
                       </span>
                     ))}
-                  </motion.div>
+                  </div>
 
                   {/* View Project Link */}
-                  <motion.a
+                  <a
                     href={project.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-[#5b9eff] hover:text-[#c778dd] font-semibold text-sm transition-colors"
-                    whileHover={isMobile ? {} : { x: 5 }}
+                    className="inline-flex items-center gap-2 text-[#5b9eff] hover:text-[#c778dd] font-semibold text-sm transition-colors hover:translate-x-1"
                   >
                     View Project
                     <ArrowRight size={16} />
-                  </motion.a>
+                  </a>
 
                   {/* GitHub Link */}
                   {project.github !== '#' && (
-                    <motion.a
+                    <a
                       href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-gray-400 hover:text-white font-semibold text-sm transition-colors mt-3"
-                      whileHover={isMobile ? {} : { x: 5 }}
+                      className="inline-flex items-center gap-2 text-gray-400 hover:text-white font-semibold text-sm transition-colors mt-3 hover:translate-x-1"
                     >
                       <Github size={16} />
                       GitHub
-                    </motion.a>
+                    </a>
                   )}
                 </div>
-              </motion.div>
+              </div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* View All CTA */}
-        <motion.div
+        <div
           className="text-center mt-20"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-          viewport={{ once: true }}
         >
-          <motion.a
+          <a
             href="https://github.com"
-            className="inline-block px-8 py-4 border-2 border-[#5b9eff] text-[#5b9eff] font-semibold rounded-xl hover:bg-[#5b9eff]/10 transition-all"
-            whileHover={isMobile ? {} : { scale: 1.05, boxShadow: '0 0 30px rgba(91, 158, 255, 0.3)' }}
-            whileTap={{ scale: 0.95 }}
+            className="inline-block px-8 py-4 border-2 border-[#5b9eff] text-[#5b9eff] font-semibold rounded-xl hover:bg-[#5b9eff]/10 transition-all hover:scale-105"
           >
             View All Projects on GitHub
-          </motion.a>
-        </motion.div>
+          </a>
+        </div>
       </div>
     </section>
   );

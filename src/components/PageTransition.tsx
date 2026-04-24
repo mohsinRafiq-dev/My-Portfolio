@@ -72,6 +72,7 @@ export const PageTransition = ({
       viewport={{ once: true, margin: '-100px' }}
       variants={variants[type]}
       className={className}
+      style={{ willChange: 'opacity, transform' }}
     >
       {children}
     </motion.div>
@@ -115,6 +116,7 @@ export const SectionReveal = ({
       viewport={{ once: true, margin: '-50px' }}
       variants={containerVariants}
       className={className}
+      style={{ willChange: 'opacity' }}
     >
       <motion.div variants={itemVariants}>
         {children}
@@ -161,6 +163,7 @@ export const StaggerContainer = ({
       viewport={{ once: true }}
       variants={variants}
       className={className}
+      style={{ willChange: 'opacity, transform' }}
     >
       {/* Map through children if array, otherwise wrap in item variant */}
       {Array.isArray(children) ? (

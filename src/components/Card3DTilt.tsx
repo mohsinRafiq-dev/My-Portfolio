@@ -8,21 +8,26 @@ interface Card3DTiltProps {
 }
 
 /**
- * Card3DTilt - Adds 3D perspective rotation effect on mouse move
+ * Card3DTilt - Adds 3D perspective rotation effect on mouse move (OPTIMIZED)
  * Rotates based on mouse position relative to card
  */
 export const Card3DTilt = ({ 
   children, 
   className = '',
-  intensity = 5
+  intensity = 2 // Reduced default intensity
 }: Card3DTiltProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const [rotateX, setRotateX] = useState(0);
   const [rotateY, setRotateY] = useState(0);
   const [isHovering, setIsHovering] = useState(false);
+  let throttleTimer: ReturnType<typeof setTimeout> | null = null;
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!ref.current) return;
+    if (!ref.current || !isHovering) return;
+
+    // Throttle mouse events - only update every 16ms (60fps)
+    if (throttleTimer) return;
+    throttleTimer = setTimeout(() => (throttleTimer = null), 16);
 
     const rect = ref.current.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
@@ -32,9 +37,9 @@ export const Card3DTilt = ({
     const distX = (e.clientX - centerX) / (rect.width / 2);
     const distY = (e.clientY - centerY) / (rect.height / 2);
 
-    // Apply rotation based on distance and intensity
-    setRotateY(distX * (10 * intensity) / 10);
-    setRotateX(-distY * (10 * intensity) / 10);
+    // Apply reduced rotation based on distance and intensity
+    setRotateY(Math.max(-5, Math.min(5, distX * intensity)));
+    setRotateX(Math.max(-5, Math.min(5, -distY * intensity)));
   };
 
   const handleMouseLeave = () => {
@@ -48,8 +53,9 @@ export const Card3DTilt = ({
       ref={ref}
       className={className}
       style={{
-        perspective: '1200px',
+        perspective: '1000px',
         transformStyle: 'preserve-3d',
+        willChange: isHovering ? 'transform' : 'auto'
       }}
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovering(true)}
@@ -60,24 +66,17 @@ export const Card3DTilt = ({
       }}
       transition={{
         type: 'spring',
-        stiffness: 300,
-        damping: 30,
+        stiffness: 200,
+        damping: 25,
       }}
     >
-      <motion.div
-        style={{
-          transformStyle: 'preserve-3d',
-          transform: `perspective(1200px)`,
-        }}
-      >
-        {children}
-      </motion.div>
+      {children}
     </motion.div>
   );
 };
 
 /**
- * TiltCard - Simplified 3D card with automatic rotation on hover
+ * TiltCard - Simplified 3D card with automatic rotation on hover (OPTIMIZED)
  * Better for project cards and skill cards
  */
 export const TiltCard = ({ 
@@ -90,9 +89,15 @@ export const TiltCard = ({
   const ref = useRef<HTMLDivElement>(null);
   const [rotateX, setRotateX] = useState(0);
   const [rotateY, setRotateY] = useState(0);
+  const [isHovering, setIsHovering] = useState(false);
+  let throttleTimer: ReturnType<typeof setTimeout> | null = null;
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!ref.current) return;
+    if (!ref.current || !isHovering) return;
+
+    // Throttle to prevent excessive updates
+    if (throttleTimer) return;
+    throttleTimer = setTimeout(() => (throttleTimer = null), 16);
 
     const rect = ref.current.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
@@ -101,13 +106,14 @@ export const TiltCard = ({
     const distX = (e.clientX - centerX) / (rect.width / 2);
     const distY = (e.clientY - centerY) / (rect.height / 2);
 
-    setRotateY(distX * 15);
-    setRotateX(-distY * 15);
+    setRotateY(Math.max(-8, Math.min(8, distX * 8)));
+    setRotateX(Math.max(-8, Math.min(8, -distY * 8)));
   };
 
   const handleMouseLeave = () => {
     setRotateX(0);
     setRotateY(0);
+    setIsHovering(false);
   };
 
   return (
@@ -115,18 +121,20 @@ export const TiltCard = ({
       ref={ref}
       className={className}
       style={{
-        perspective: '1200px',
+        perspective: '1000px',
+        willChange: isHovering ? 'transform' : 'auto'
       }}
       onMouseMove={handleMouseMove}
+      onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={handleMouseLeave}
       animate={{
-        rotateX,
-        rotateY,
+        rotateX: isHovering ? rotateX : 0,
+        rotateY: isHovering ? rotateY : 0,
       }}
       transition={{
         type: 'spring',
-        stiffness: 400,
-        damping: 40,
+        stiffness: 300,
+        damping: 30,
       }}
     >
       {children}
