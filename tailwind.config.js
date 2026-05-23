@@ -8,6 +8,7 @@ module.exports = {
       fontFamily: {
         sans: ['Poppins', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
         mono: ['Space Mono', 'monospace'],
+        display: ['"Space Grotesk"', 'Poppins', 'sans-serif'],
       },
       colors: {
         dark: {

@@ -2,7 +2,8 @@ import { motion } from 'framer-motion';
 import { Github, ArrowRight } from 'lucide-react';
 import { AnimatedTitle } from './AnimatedElements';
 import { SectionBackground } from './SectionBackground';
-import { useState, useEffect } from 'react';
+import { useIsMobile } from '../hooks/useIsMobile';
+import { useState } from 'react';
 
 const allProjects = [
   {
@@ -15,8 +16,7 @@ const allProjects = [
     link: 'https://www.justees.store/',
     github: 'https://github.com/mohsinRafiq-dev/Justees-Project',
     image: 'bg-gradient-to-br from-purple-500 to-pink-500',
-    imageUrl: '/Project%20Pics/Justees%20project.png',
-    views: '58.9K',
+    imageUrl: '/projects/justees.png',
     color: 'from-purple-500 to-pink-500'
   },
   {
@@ -29,8 +29,7 @@ const allProjects = [
     link: 'https://www.ashraffurnitures.com/',
     github: 'https://github.com/mohsinRafiq-dev/Ashraf-Furnitures',
     image: 'bg-gradient-to-br from-amber-600 to-orange-600',
-    imageUrl: '/Project%20Pics/Ashraf%20Furnitures.png',
-    views: '85.2K',
+    imageUrl: '/projects/ashraf-furnitures.png',
     color: 'from-amber-500 to-orange-500'
   },
   {
@@ -43,122 +42,20 @@ const allProjects = [
     link: '#',
     github: 'https://github.com/mohsinRafiq-dev/learncodeai-frontend',
     image: 'bg-gradient-to-br from-cyan-500 to-purple-500',
-    imageUrl: '/Project%20Pics/LearnCodeAi.png',
-    views: '42.1K',
+    imageUrl: '/projects/learncode-ai.png',
     color: 'from-cyan-500 to-purple-500'
-  },
-  {
-    id: 4,
-    category: 'mobile',
-    featured: false,
-    title: 'Mobile App Ecosystem',
-    description: 'Cross-platform mobile application with offline support and cloud synchronization',
-    tech: ['React Native', 'Firebase', 'Redux'],
-    link: '#',
-    github: '#',
-    image: 'bg-gradient-to-br from-orange-500 to-red-500',
-    views: '28.9K',
-    color: 'from-orange-500 to-red-500'
-  },
-  {
-    id: 5,
-    category: 'web',
-    featured: false,
-    title: 'Music Streaming App',
-    description: 'Modern music streaming platform with recommendations and playlist management',
-    tech: ['React', 'Node.js', 'MongoDB'],
-    link: '#',
-    github: '#',
-    image: 'bg-gradient-to-br from-pink-500 to-rose-500',
-    views: '31.2K',
-    color: 'from-pink-500 to-rose-500'
-  },
-  {
-    id: 6,
-    category: 'fullstack',
-    featured: false,
-    title: 'Project Management Tool',
-    description: 'Collaborative project management platform with real-time updates and team coordination',
-    tech: ['React', 'Node.js', 'PostgreSQL', 'WebSocket'],
-    link: '#',
-    github: '#',
-    image: 'bg-gradient-to-br from-indigo-500 to-purple-500',
-    views: '44.7K',
-    color: 'from-indigo-500 to-purple-500'
-  },
-  {
-    id: 7,
-    category: 'web',
-    featured: false,
-    title: 'Blog Platform',
-    description: 'Feature-rich blogging platform with markdown editor and comment system',
-    tech: ['Next.js', 'Node.js', 'MongoDB'],
-    link: '#',
-    github: '#',
-    image: 'bg-gradient-to-br from-[#c778dd] to-white',
-    views: '21.5K',
-    color: 'from-blue-500 to-cyan-500'
-  },
-  {
-    id: 8,
-    category: 'mobile',
-    featured: false,
-    title: 'Fitness Tracker App',
-    description: 'Track workouts, calories, and health metrics with beautiful visualizations',
-    tech: ['React Native', 'Firebase', 'Expo'],
-    link: '#',
-    github: '#',
-    image: 'bg-gradient-to-br from-yellow-400 to-orange-500',
-    views: '19.8K',
-    color: 'from-yellow-400 to-orange-500'
-  },
-  {
-    id: 9,
-    category: 'web',
-    featured: false,
-    title: 'Portfolio Builder',
-    description: 'Drag-and-drop portfolio builder for creative professionals',
-    tech: ['React', 'TypeScript', 'TailwindCSS'],
-    link: '#',
-    github: '#',
-    image: 'bg-gradient-to-br from-red-500 to-pink-500',
-    views: '27.3K',
-    color: 'from-red-500 to-pink-500'
-  },
-  {
-    id: 10,
-    category: 'fullstack',
-    featured: false,
-    title: 'Social Network',
-    description: 'Decentralized social network with messaging, notifications, and feed system',
-    tech: ['React', 'Node.js', 'PostgreSQL', 'Redis'],
-    link: '#',
-    github: '#',
-    image: 'bg-gradient-to-br from-[#c778dd] to-[#9e5bb8]',
-    views: '52.1K',
-    color: 'from-violet-500 to-purple-500'
   },
 ];
 
 const categories = [
   { id: 'all', label: 'All' },
   { id: 'web', label: 'Web' },
-  { id: 'mobile', label: 'Mobile' },
   { id: 'fullstack', label: 'Fullstack' },
 ];
 
 export const Projects = () => {
   const [activeFilter, setActiveFilter] = useState('all');
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  const isMobile = useIsMobile();
 
   const filteredProjects =
     activeFilter === 'all' ? allProjects : allProjects.filter((p) => p.category === activeFilter);
@@ -294,9 +191,13 @@ export const Projects = () => {
                 >
                   {/* Image with proper scaling */}
                   {project.imageUrl && (
-                    <motion.img 
+                    <motion.img
                       src={project.imageUrl}
-                      alt={project.title}
+                      alt={`${project.title} project screenshot`}
+                      loading="lazy"
+                      decoding="async"
+                      width={800}
+                      height={576}
                       className="h-full w-full object-cover"
                       variants={{
                         initial: { scale: 1, filter: 'blur(0px)' },
@@ -442,7 +343,9 @@ export const Projects = () => {
           viewport={{ once: true }}
         >
           <motion.a
-            href="https://github.com"
+            href="https://github.com/mohsinRafiq-dev"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-block px-8 py-4 border-2 border-[#5b9eff] text-[#5b9eff] font-semibold rounded-xl hover:bg-[#5b9eff]/10 transition-all"
             whileHover={isMobile ? {} : { scale: 1.05, boxShadow: '0 0 30px rgba(91, 158, 255, 0.3)' }}
             whileTap={{ scale: 0.95 }}

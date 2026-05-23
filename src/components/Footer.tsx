@@ -1,32 +1,10 @@
 import { motion } from 'framer-motion';
 import { Github, Linkedin, Mail, Heart, Instagram } from 'lucide-react';
-import { useState, useEffect } from 'react';
-
-const XLogo = ({ size = 18, className = '' }: { size?: number; className?: string }) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="currentColor"
-    className={className}
-    aria-hidden="true"
-  >
-    <path d="M18.244 2H21.5l-7.11 8.128L22.75 22h-6.545l-5.124-6.726L4.87 22H1.61l7.605-8.697L1.25 2h6.71l4.633 6.116L18.244 2zm-1.14 18h1.804L6.98 3.9H5.04L17.104 20z" />
-  </svg>
-);
+import { XLogo } from './icons/XLogo';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 export const Footer = () => {
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  const isMobile = useIsMobile();
 
   const currentYear = new Date().getFullYear();
 
@@ -207,7 +185,7 @@ export const Footer = () => {
                       y: { duration: 3, repeat: Infinity, ease: 'easeInOut', delay: idx * 0.15 },
                       default: { delay: 0.35 + idx * 0.06, duration: 0.4 }
                     }}
-                    title={social.label}
+                    aria-label={social.label}
                   >
                     <Icon size={18} className="relative z-10" />
                   </motion.a>

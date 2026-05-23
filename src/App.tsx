@@ -1,8 +1,19 @@
-import { useEffect } from 'react';
+import { useEffect, lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
-import { Header, Hero, About, Journey, Projects, Skills, Contact, Footer, ScrollProgressBar } from './components';
+import { Header, Hero, ScrollProgressBar } from './components';
+import { SectionSkeleton } from './components/Skeleton';
+import { useScrollHue } from './hooks/useScrollHue';
+
+const About = lazy(() => import('./components/About').then(m => ({ default: m.About })));
+const Journey = lazy(() => import('./components/Journey').then(m => ({ default: m.Journey })));
+const Projects = lazy(() => import('./components/Projects').then(m => ({ default: m.Projects })));
+const Skills = lazy(() => import('./components/Skills').then(m => ({ default: m.Skills })));
+const Contact = lazy(() => import('./components/Contact').then(m => ({ default: m.Contact })));
+const Footer = lazy(() => import('./components/Footer').then(m => ({ default: m.Footer })));
 
 function App() {
+  useScrollHue();
+
   useEffect(() => {
     // Enable smooth scroll behavior
     document.documentElement.style.scrollBehavior = 'smooth';
@@ -22,8 +33,15 @@ function App() {
 
   return (
     <div className="min-h-screen bg-transparent text-[#ABB2BF] relative">
-      {/* Fixed Full-Page Geometric Background */}
-      <div className="fixed inset-0 -z-20 pointer-events-none bg-gradient-to-br from-[#282c33] via-[#1a1d23] to-[#282c33] overflow-hidden">
+      {/* Fixed Full-Page Geometric Background — hue shifts with scroll */}
+      <div
+        className="fixed inset-0 -z-20 pointer-events-none overflow-hidden"
+        style={{
+          background: `radial-gradient(at 20% 20%, rgba(199, 120, 221, calc(0.18 - var(--scroll-progress) * 0.10)) 0%, transparent 50%),
+                       radial-gradient(at 80% 80%, rgba(91, 158, 255, calc(0.08 + var(--scroll-progress) * 0.12)) 0%, transparent 55%),
+                       linear-gradient(135deg, #282c33 0%, #1a1d23 50%, #282c33 100%)`
+        }}
+      >
         {/* Animated background orbs */}
         <motion.div
           className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-gradient-to-br from-[#c778dd]/70 to-transparent blur-3xl"
@@ -77,27 +95,19 @@ function App() {
 
       {/* Main Content */}
       <main>
-        {/* Hero Section */}
         <Hero />
-
-        {/* About Section */}
-        <About />
-
-        {/* Journey Section */}
-        <Journey />
-
-        {/* Projects Section */}
-        <Projects />
-
-        {/* Skills Section */}
-        <Skills />
-
-        {/* Contact Section */}
-        <Contact />
+        <Suspense fallback={<SectionSkeleton />}>
+          <About />
+          <Journey />
+          <Projects />
+          <Skills />
+          <Contact />
+        </Suspense>
       </main>
 
-      {/* Footer */}
-      <Footer />
+      <Suspense fallback={null}>
+        <Footer />
+      </Suspense>
     </div>
   );
 }

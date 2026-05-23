@@ -1,23 +1,10 @@
- import { motion, useScroll, useTransform } from 'framer-motion';
-import { Code2, Trophy, Rocket, Github, Linkedin, Database, GitBranch, Zap, Instagram, Mail, ArrowRight, Mouse } from 'lucide-react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { Code2, Trophy, Rocket, Github, Linkedin, Instagram, Mail, ArrowRight, Mouse } from 'lucide-react';
 import { TextReveal } from './TextReveal';
+import { XLogo } from './icons/XLogo';
+import { useIsMobile } from '../hooks/useIsMobile';
+import { useMagnetic } from '../hooks/useMagnetic';
 import { useEffect, useState, useRef } from 'react';
-
-const profileImage = new URL('../Public/My Picture.jpg', import.meta.url).href;
-
-const XLogo = ({ size = 20, className = '' }: { size?: number; className?: string }) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="currentColor"
-    className={className}
-    aria-hidden="true"
-  >
-    <path d="M18.244 2H21.5l-7.11 8.128L22.75 22h-6.545l-5.124-6.726L4.87 22H1.61l7.605-8.697L1.25 2h6.71l4.633 6.116L18.244 2zm-1.14 18h1.804L6.98 3.9H5.04L17.104 20z" />
-  </svg>
-);
 
 const CountUpNumber = ({ target }: { target: string }) => {
   const [displayValue, setDisplayValue] = useState('0');
@@ -72,19 +59,10 @@ const CountUpNumber = ({ target }: { target: string }) => {
 export const Hero = () => {
   const { scrollY } = useScroll();
   const profileY = useTransform(scrollY, [0, 500], [0, 150]);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const isMobile = useIsMobile();
   const mobileHeroAnimationsEnabled = true;
   const reduceHeroOnMobile = isMobile && !mobileHeroAnimationsEnabled;
   const liteHeroOnMobile = isMobile && mobileHeroAnimationsEnabled;
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
   const container = {
     hidden: { opacity: 0 },
     visible: {
@@ -282,10 +260,12 @@ export const Hero = () => {
             {/* CTA Buttons */}
             <motion.div variants={item} className="flex flex-col sm:flex-row gap-4 pt-6">
               <motion.button
+                type="button"
+                aria-label="Scroll to contact section"
                 className="group relative px-6 md:px-8 py-3 md:py-4 font-bold rounded-full overflow-hidden flex items-center justify-center gap-2 bg-gradient-to-r from-[#5b9eff] to-[#c778dd] text-white shadow-lg"
                 whileHover={reduceHeroOnMobile ? {} : {
-                  scale: 1.08, 
-                  boxShadow: '0 20px 60px rgba(199, 120, 221, 0.8), 0 0 40px rgba(91, 158, 255, 0.6)' 
+                  scale: 1.08,
+                  boxShadow: '0 20px 60px rgba(199, 120, 221, 0.8), 0 0 40px rgba(91, 158, 255, 0.6)'
                 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
@@ -312,11 +292,14 @@ export const Hero = () => {
                 </span>
               </motion.button>
 
-              <motion.button
+              <motion.a
+                href="/Resume.pdf"
+                download
+                aria-label="Download Resume"
                 className="group relative px-6 md:px-8 py-3 md:py-4 font-bold rounded-full border-2 border-[#c778dd]/50 text-white overflow-hidden flex items-center justify-center gap-2"
                 whileHover={reduceHeroOnMobile ? {} : {
-                  scale: 1.08, 
-                  backgroundColor: 'rgba(199, 120, 221, 0.15)', 
+                  scale: 1.08,
+                  backgroundColor: 'rgba(199, 120, 221, 0.15)',
                   borderColor: '#c778dd',
                   boxShadow: '0 15px 50px rgba(199, 120, 221, 0.5)'
                 }}
@@ -344,7 +327,7 @@ export const Hero = () => {
                   </motion.svg>
                   Resume
                 </span>
-              </motion.button>
+              </motion.a>
             </motion.div>
 
             {/* Social Links */}
@@ -366,7 +349,7 @@ export const Hero = () => {
                     className={`w-12 h-12 rounded-lg border border-[#c778dd]/30 flex items-center justify-center text-[#c778dd] ${reduceHeroOnMobile ? 'bg-[#c778dd]/10' : 'bg-gradient-to-br from-[#c778dd]/10 to-[#5b9eff]/5 backdrop-blur-sm'} hover:border-[#c778dd] transition-all relative overflow-hidden`}
                     whileHover={reduceHeroOnMobile ? {} : { scale: 1.3, y: -10, boxShadow: '0 15px 35px rgba(199, 120, 221, 0.6)' }}
                     whileTap={{ scale: 0.8 }}
-                    title={social.label}
+                    aria-label={social.label}
                     animate={reduceHeroOnMobile ? {} : liteHeroOnMobile ? {
                       y: [0, -2, 0]
                     } : {
@@ -539,9 +522,13 @@ export const Hero = () => {
               />
 
               {/* Profile image - clean and clear */}
-              <img 
-                src={profileImage} 
-                alt="Profile"
+              <img
+                src="/profile.jpg"
+                alt="Mohsin Rafiq"
+                width={320}
+                height={320}
+                decoding="async"
+                fetchPriority="high"
                 className="w-full h-full object-cover rounded-full"
               />
             </motion.div>

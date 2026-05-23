@@ -2,22 +2,10 @@ import { motion } from 'framer-motion';
 import { Mail, Github, Linkedin, MapPin, Phone, Instagram } from 'lucide-react';
 import { AnimatedTitle } from './AnimatedElements';
 import { SectionBackground } from './SectionBackground';
+import { XLogo } from './icons/XLogo';
+import { useIsMobile } from '../hooks/useIsMobile';
 import { useState, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
-
-const XLogo = ({ size = 20, className = '' }: { size?: number; className?: string }) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="currentColor"
-    className={className}
-    aria-hidden="true"
-  >
-    <path d="M18.244 2H21.5l-7.11 8.128L22.75 22h-6.545l-5.124-6.726L4.87 22H1.61l7.605-8.697L1.25 2h6.71l4.633 6.116L18.244 2zm-1.14 18h1.804L6.98 3.9H5.04L17.104 20z" />
-  </svg>
-);
 
 const contactMethods = [
   {
@@ -87,19 +75,11 @@ export const Contact = () => {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const isMobile = useIsMobile();
 
-  // Initialize EmailJS and mobile detection
   useEffect(() => {
-    const publicKey = (import.meta as any).env.VITE_EMAILJS_PUBLIC_KEY || 'YOUR_PUBLIC_KEY';
-    emailjs.init(publicKey);
-
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+    if (publicKey) emailjs.init(publicKey);
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -131,9 +111,9 @@ export const Contact = () => {
     setError('');
 
     try {
-      const serviceId = (import.meta as any).env.VITE_EMAILJS_SERVICE_ID || 'SERVICE_ID';
-      const templateId = (import.meta as any).env.VITE_EMAILJS_TEMPLATE_ID || 'TEMPLATE_ID';
-      const contactEmail = (import.meta as any).env.VITE_CONTACT_EMAIL || 'hello@example.com';
+      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+      const contactEmail = import.meta.env.VITE_CONTACT_EMAIL;
 
       const response = await emailjs.send(
         serviceId,
@@ -321,7 +301,7 @@ export const Contact = () => {
                       initial={{ opacity: 0, y: 10 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
-                      title={social.label}
+                      aria-label={social.label}
                       animate={isMobile ? {} : {
                         y: [0, -5, 0]
                       }}
