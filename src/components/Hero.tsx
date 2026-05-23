@@ -123,18 +123,6 @@ export const Hero = () => {
         </svg>
       </div>
 
-      {/* Floating geometric shapes */}
-      <motion.div
-        className="absolute top-1/4 left-1/4 w-32 h-32 border border-[#5b9eff]/40 rounded-lg hidden lg:block"
-        animate={reduceHeroOnMobile ? {} : { rotate: 360, scale: [1, 1.2, 1] }}
-        transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
-      />
-      <motion.div
-        className="absolute bottom-1/3 right-1/3 w-24 h-24 border border-[#c778dd]/40 rounded-full hidden lg:block"
-        animate={reduceHeroOnMobile ? {} : { rotate: -360, scale: [1, 1.15, 1] }}
-        transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
-      />
-
       <motion.div className="container mx-auto px-4 py-8 md:py-20 relative z-10 flex items-center min-h-screen" variants={container} initial="hidden" animate="visible">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center max-w-7xl mx-auto w-full">
           
@@ -186,7 +174,7 @@ export const Hero = () => {
 
             {/* Main Title */}
             <motion.div variants={item}>
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-black leading-tight tracking-tight">
+              <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight">
                 <TextReveal 
                   text="Full Stack" 
                   className="block text-white"
