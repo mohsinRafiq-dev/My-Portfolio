@@ -208,20 +208,14 @@ export const Hero = () => {
                     transition={{ delay: 0.8 + idx * 0.1, duration: 0.5 }}
                   >
                     <motion.div
-                      whileHover={{ scale: isMobile ? 1 : 1.25, rotate: isMobile ? 0 : 15 }}
-                      animate={reduceHeroOnMobile ? {} : { rotate: [0, 5, -5, 0] }}
-                      transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: idx * 0.2 }}
+                      whileHover={{ scale: isMobile ? 1 : 1.15, rotate: isMobile ? 0 : 8 }}
                       className="text-[#c778dd] mb-2 inline-block"
                     >
                       <Icon size={isMobile ? 24 : 28} />
                     </motion.div>
-                    <motion.div 
-                      className="text-xl md:text-3xl font-bold text-white"
-                      animate={reduceHeroOnMobile ? {} : { scale: [1, 1.1, 1] }}
-                      transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut', delay: idx * 0.15 }}
-                    >
+                    <div className="text-xl md:text-3xl font-bold text-white">
                       <CountUpNumber target={stat.value} />
-                    </motion.div>
+                    </div>
                     <div className="text-xs md:text-sm text-gray-400 font-medium">{stat.label}</div>
                   </motion.div>
                 );
