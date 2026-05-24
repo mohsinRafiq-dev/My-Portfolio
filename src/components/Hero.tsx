@@ -125,32 +125,21 @@ export const Hero = () => {
             
             {/* Status Badge */}
             <motion.div variants={item}>
-              <motion.div 
+              <motion.div
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-emerald-500/40 bg-emerald-500/10 backdrop-blur-sm"
-                animate={reduceHeroOnMobile ? {} : liteHeroOnMobile ? {
+                animate={reduceHeroOnMobile ? {} : {
                   borderColor: ['rgba(16, 185, 129, 0.35)', 'rgba(16, 185, 129, 0.55)', 'rgba(16, 185, 129, 0.35)']
-                } : {
-                  borderColor: ['rgba(16, 185, 129, 0.4)', 'rgba(16, 185, 129, 0.8)', 'rgba(16, 185, 129, 0.4)'],
-                  boxShadow: ['0 0 15px rgba(16, 185, 129, 0.2)', '0 0 30px rgba(16, 185, 129, 0.5)', '0 0 15px rgba(16, 185, 129, 0.2)']
                 }}
-                transition={reduceHeroOnMobile ? { duration: 0 } : { duration: liteHeroOnMobile ? 3 : 2, repeat: Infinity, ease: 'easeInOut' }}
+                transition={reduceHeroOnMobile ? { duration: 0 } : { duration: 3, repeat: Infinity, ease: 'easeInOut' }}
               >
-                <motion.div 
+                <motion.div
                   className="w-2 h-2 rounded-full bg-emerald-400"
-                  animate={reduceHeroOnMobile ? {} : liteHeroOnMobile ? {
+                  animate={reduceHeroOnMobile ? {} : {
                     scale: [1, 1.2, 1],
                     opacity: [1, 0.6, 1]
-                  } : {
-                    scale: [1, 1.5, 1],
-                    opacity: [1, 0.4, 1],
-                    boxShadow: [
-                      '0 0 0px rgba(52, 211, 153, 0)',
-                      '0 0 16px rgba(52, 211, 153, 0.8)',
-                      '0 0 0px rgba(52, 211, 153, 0)'
-                    ]
                   }}
                   transition={reduceHeroOnMobile ? { duration: 0 } : {
-                    duration: liteHeroOnMobile ? 2.2 : 1.5,
+                    duration: 2.2,
                     repeat: Infinity,
                     ease: 'easeInOut'
                   }}
@@ -178,7 +167,7 @@ export const Hero = () => {
                   animate={reduceHeroOnMobile ? {} : {
                     backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
                   }}
-                  transition={reduceHeroOnMobile ? { duration: 0 } : { duration: liteHeroOnMobile ? 10 : 6, repeat: Infinity, ease: 'easeInOut' }}
+                  transition={reduceHeroOnMobile ? { duration: 0 } : { duration: 10, repeat: Infinity, ease: 'easeInOut' }}
                   style={{
                     background: 'linear-gradient(90deg, #5b9eff 0%, #c778dd 50%, #9e5bb8 100%)',
                     backgroundSize: '200% 100%',
