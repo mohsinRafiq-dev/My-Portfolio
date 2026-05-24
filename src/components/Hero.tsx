@@ -90,27 +90,19 @@ export const Hero = () => {
       {/* Animated background orbs */}
       <motion.div
         className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-gradient-to-br from-[#c778dd]/70 to-transparent blur-3xl"
-        animate={reduceHeroOnMobile ? {} : liteHeroOnMobile ? {
-          scale: [1, 1.1, 1],
-          y: [0, -20, 0],
-        } : {
-          scale: [1, 1.3, 0.9, 1.2, 1],
-          x: [0, 60, -30, 50, 0],
-          y: [0, -40, 20, -30, 0],
+        animate={reduceHeroOnMobile ? {} : {
+          scale: [1, 1.08, 1],
+          y: [0, -15, 0],
         }}
-        transition={{ duration: liteHeroOnMobile ? 18 : 25, repeat: Infinity, ease: 'easeInOut' }}
+        transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
       />
       <motion.div
         className="absolute -bottom-40 -left-40 w-96 h-96 rounded-full bg-gradient-to-tr from-[#5b9eff]/70 to-transparent blur-3xl"
-        animate={reduceHeroOnMobile ? {} : liteHeroOnMobile ? {
-          scale: [1, 1.08, 1],
-          y: [0, 18, 0],
-        } : {
-          scale: [1, 1.1, 0.85, 1.15, 1],
-          x: [0, -60, 30, -50, 0],
-          y: [0, 40, -20, 30, 0],
+        animate={reduceHeroOnMobile ? {} : {
+          scale: [1, 1.06, 1],
+          y: [0, 15, 0],
         }}
-        transition={{ duration: liteHeroOnMobile ? 20 : 30, repeat: Infinity, ease: 'easeInOut' }}
+        transition={{ duration: 24, repeat: Infinity, ease: 'easeInOut' }}
       />
 
       {/* Animated grid pattern */}
