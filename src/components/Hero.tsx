@@ -284,29 +284,10 @@ export const Hero = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className={`w-12 h-12 rounded-lg border border-[#c778dd]/30 flex items-center justify-center text-[#c778dd] ${reduceHeroOnMobile ? 'bg-[#c778dd]/10' : 'bg-gradient-to-br from-[#c778dd]/10 to-[#5b9eff]/5 backdrop-blur-sm'} hover:border-[#c778dd] transition-all relative overflow-hidden`}
-                    whileHover={reduceHeroOnMobile ? {} : { scale: 1.3, y: -10, boxShadow: '0 15px 35px rgba(199, 120, 221, 0.6)' }}
-                    whileTap={{ scale: 0.8 }}
+                    whileHover={reduceHeroOnMobile ? {} : { scale: 1.1, y: -4 }}
+                    whileTap={{ scale: 0.92 }}
                     aria-label={social.label}
-                    animate={reduceHeroOnMobile ? {} : liteHeroOnMobile ? {
-                      y: [0, -2, 0]
-                    } : {
-                      y: [0, -6, 0],
-                      x: [0, 2, -2, 0],
-                      rotate: [0, 5, -5, 0]
-                    }}
-                    transition={reduceHeroOnMobile ? { duration: 0 } : {
-                      duration: liteHeroOnMobile ? 4.5 : 3,
-                      repeat: Infinity,
-                      ease: 'easeInOut',
-                      delay: idx * 0.15
-                    }}
                   >
-                    <motion.div
-                      className="absolute inset-0 bg-white/20 rounded-lg"
-                      initial={{ opacity: 0, scale: 0 }}
-                      whileHover={reduceHeroOnMobile ? {} : { opacity: 1, scale: 2 }}
-                      transition={{ duration: 0.3 }}
-                    />
                     <Icon size={20} className="relative z-10" />
                   </motion.a>
                 );
