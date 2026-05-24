@@ -62,7 +62,6 @@ export const Hero = () => {
   const isMobile = useIsMobile();
   const mobileHeroAnimationsEnabled = true;
   const reduceHeroOnMobile = isMobile && !mobileHeroAnimationsEnabled;
-  const liteHeroOnMobile = isMobile && mobileHeroAnimationsEnabled;
   const primaryCtaRef = useMagnetic(0.3);
   const resumeCtaRef = useMagnetic(0.25);
   const container = {
@@ -304,48 +303,22 @@ export const Hero = () => {
             style={{ y: reduceHeroOnMobile ? 0 : profileY }}
             transition={{ duration: 0.6, ease: 'easeOut', type: 'spring', stiffness: 100 }}
           >
-            {/* Dual glow backgrounds */}
+            {/* Soft glow background */}
             {reduceHeroOnMobile ? (
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="absolute w-72 h-72 rounded-full bg-gradient-to-br from-[#c778dd]/20 to-[#5b9eff]/20" />
               </div>
-            ) : liteHeroOnMobile ? (
+            ) : (
               <motion.div
                 className="absolute inset-0 flex items-center justify-center"
                 animate={{
-                  scale: [1, 1.08, 1],
-                  opacity: [0.35, 0.55, 0.35],
+                  scale: [1, 1.06, 1],
+                  opacity: [0.4, 0.6, 0.4],
                 }}
-                transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }}
+                transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
               >
-                <div className="absolute inset-8 rounded-full bg-gradient-to-br from-[#c778dd]/30 to-[#5b9eff]/25 blur-2xl" />
+                <div className="absolute inset-4 rounded-full bg-gradient-to-br from-[#c778dd]/35 to-[#5b9eff]/30 blur-3xl" />
               </motion.div>
-            ) : (
-              <>
-                <motion.div
-                  className="absolute inset-0 flex items-center justify-center"
-                  animate={{
-                    scale: [1, 1.3, 0.9, 1.2, 1],
-                    opacity: [0.6, 0.9, 0.2, 0.8, 0.6],
-                    rotate: [0, 45, 90, 135, 180]
-                  }}
-                  transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-                >
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-br from-[#c778dd]/50 via-transparent to-[#5b9eff]/50 blur-3xl" />
-                </motion.div>
-
-                <motion.div
-                  className="absolute inset-0 flex items-center justify-center"
-                  animate={{
-                    scale: [1.2, 1.4, 0.95, 1.25, 1.2],
-                    opacity: [0.25, 0.5, 0.1, 0.4, 0.25],
-                    rotate: [-45, 0, 45, 90, -45]
-                  }}
-                  transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 0.3 }}
-                >
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-[#5b9eff]/40 to-[#c778dd]/40 blur-3xl" />
-                </motion.div>
-              </>
             )}
 
             {/* Profile Image Circle */}
@@ -372,34 +345,13 @@ export const Hero = () => {
         {/* Scroll indicator */}
         {!reduceHeroOnMobile && <motion.div
           className="absolute -bottom-4 sm:bottom-5 md:bottom-24 left-1/2 -translate-x-1/2 -ml-16"
-          animate={{ y: liteHeroOnMobile ? [0, 10, 0] : [0, 20, 0] }}
-          transition={{ duration: liteHeroOnMobile ? 4.5 : 3.5, repeat: Infinity, ease: 'easeInOut' }}
+          animate={{ y: [0, 8, 0], opacity: [0.7, 1, 0.7] }}
+          transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
         >
-          <motion.div 
-            className="text-center flex flex-col items-center gap-2"
-            animate={{ opacity: [0.6, 1, 0.6] }}
-            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-          >
+          <div className="text-center flex flex-col items-center gap-2">
             <div className="text-xs font-semibold tracking-widest uppercase text-[#c778dd]">Scroll to explore</div>
-            <motion.div
-              animate={{ 
-                y: [0, 10, 0],
-                rotate: [0, 5, -5, 0]
-              }}
-              transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-              className="relative"
-            >
-              <motion.div
-                className="absolute -inset-3 bg-gradient-to-br from-[#c778dd]/20 to-[#5b9eff]/20 rounded-full blur-lg"
-                animate={{ 
-                  scale: [1, 1.3, 1],
-                  opacity: [0.3, 0.6, 0.3]
-                }}
-                transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-              />
-              <Mouse className="w-6 h-6 text-[#c778dd] relative z-10" strokeWidth={2} />
-            </motion.div>
-          </motion.div>
+            <Mouse className="w-6 h-6 text-[#c778dd]" strokeWidth={2} />
+          </div>
         </motion.div>}
       </motion.div>
     </section>
