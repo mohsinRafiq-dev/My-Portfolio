@@ -1,326 +1,133 @@
 import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { AnimatedTitle } from './AnimatedElements';
 import { SectionBackground } from './SectionBackground';
+import { useIsMobile } from '../hooks/useIsMobile';
 
-const skillCategories = [
+type Skill = { name: string; years: number };
+
+const skillCategories: { id: string; title: string; skills: Skill[] }[] = [
   {
     id: 'frontend',
     title: 'Frontend',
     skills: [
-      { name: 'React.js', color: 'from-purple-500 to-pink-500', level: 95, exp: '3 years experience' },
-      { name: 'Next.js', color: 'from-blue-500 to-cyan-500', level: 90, exp: '2 years experience' },
-      { name: 'TypeScript', color: 'from-blue-600 to-indigo-600', level: 88, exp: '3 years experience' },
-      { name: 'TailwindCSS', color: 'from-pink-500 to-purple-500', level: 92, exp: '3 years experience' },
-      { name: 'JavaScript', color: 'from-yellow-500 to-orange-500', level: 94, exp: '3 years experience' },
-      { name: 'HTML/CSS', color: 'from-green-500 to-emerald-500', level: 96, exp: '3 years experience' },
-      { name: 'React Native', color: 'from-red-500 to-pink-500', level: 85, exp: '1 year experience' },
-      { name: 'Bootstrap', color: 'from-indigo-500 to-purple-500', level: 87, exp: '2 years experience' },
-      { name: 'Redux', color: 'from-purple-600 to-pink-600', level: 87, exp: '2 years experience' },
-      { name: 'Framer Motion', color: 'from-cyan-500 to-blue-500', level: 91, exp: '2.5 years experience' },
-      { name: 'Sass/SCSS', color: 'from-pink-600 to-red-600', level: 89, exp: '2.5 years experience' },
-      { name: 'Webpack', color: 'from-cyan-600 to-blue-600', level: 82, exp: '2 years experience' },
-      { name: 'Jest/Testing', color: 'from-red-600 to-pink-600', level: 80, exp: '1.5 years experience' },
+      { name: 'React.js', years: 3 },
+      { name: 'Next.js', years: 2 },
+      { name: 'TypeScript', years: 3 },
+      { name: 'TailwindCSS', years: 3 },
+      { name: 'JavaScript', years: 3 },
+      { name: 'HTML / CSS', years: 3 },
+      { name: 'React Native', years: 1 },
+      { name: 'Redux', years: 2 },
+      { name: 'Framer Motion', years: 2 },
+      { name: 'Sass / SCSS', years: 2 },
     ],
   },
   {
     id: 'backend',
     title: 'Backend',
     skills: [
-      { name: 'Node.js', color: 'from-green-500 to-emerald-500', level: 90, exp: '3 years experience' },
-      { name: 'Express.js', color: 'from-red-500 to-pink-500', level: 89, exp: '3 years experience' },
-      { name: 'MongoDB', color: 'from-green-600 to-emerald-600', level: 88, exp: '2.5 years experience' },
-      { name: 'PostgreSQL', color: 'from-blue-600 to-indigo-600', level: 85, exp: '2 years experience' },
-      { name: 'Python', color: 'from-blue-500 to-cyan-500', level: 82, exp: '1.5 years experience' },
-      { name: 'REST API', color: 'from-cyan-500 to-blue-500', level: 91, exp: '3 years experience' },
-      { name: 'GraphQL', color: 'from-pink-500 to-purple-500', level: 82, exp: '1.5 years experience' },
-      { name: 'Firebase', color: 'from-orange-500 to-yellow-500', level: 88, exp: '2 years experience' },
-      { name: 'Django', color: 'from-green-700 to-emerald-700', level: 80, exp: '1 year experience' },
-      { name: 'MySQL', color: 'from-blue-600 to-indigo-600', level: 83, exp: '2 years experience' },
-      { name: 'Redis', color: 'from-red-600 to-pink-600', level: 79, exp: '1.5 years experience' },
-      { name: 'PHP', color: 'from-purple-600 to-indigo-600', level: 78, exp: '1 year experience' },
-      { name: 'Laravel', color: 'from-red-500 to-pink-500', level: 76, exp: '1 year experience' },
+      { name: 'Node.js', years: 3 },
+      { name: 'Express.js', years: 3 },
+      { name: 'MongoDB', years: 2 },
+      { name: 'PostgreSQL', years: 2 },
+      { name: 'Python', years: 1 },
+      { name: 'REST API', years: 3 },
+      { name: 'GraphQL', years: 1 },
+      { name: 'Firebase', years: 2 },
+      { name: 'MySQL', years: 2 },
+      { name: 'Redis', years: 1 },
     ],
   },
   {
     id: 'tools',
-    title: 'Tools & Others',
+    title: 'Tools',
     skills: [
-      { name: 'Git & GitHub', color: 'from-blue-500 to-cyan-500', level: 94, exp: '3 years experience' },
-      { name: 'Docker', color: 'from-blue-600 to-indigo-600', level: 83, exp: '1.5 years experience' },
-      { name: 'AWS', color: 'from-orange-500 to-red-500', level: 81, exp: '1 year experience' },
-      { name: 'VS Code', color: 'from-blue-500 to-cyan-500', level: 96, exp: '3 years experience' },
-      { name: 'Figma', color: 'from-pink-500 to-purple-500', level: 89, exp: '2 years experience' },
-      { name: 'Postman', color: 'from-orange-600 to-red-600', level: 92, exp: '2 years experience' },
-      { name: 'Linux', color: 'from-yellow-500 to-orange-500', level: 85, exp: '2 years experience' },
-      { name: 'CI/CD', color: 'from-blue-600 to-indigo-600', level: 80, exp: '1 year experience' },
-      { name: 'Jira', color: 'from-blue-700 to-indigo-700', level: 84, exp: '2 years experience' },
+      { name: 'Git & GitHub', years: 3 },
+      { name: 'Docker', years: 1 },
+      { name: 'AWS', years: 1 },
+      { name: 'VS Code', years: 3 },
+      { name: 'Figma', years: 2 },
+      { name: 'Postman', years: 2 },
+      { name: 'Linux', years: 2 },
+      { name: 'CI / CD', years: 1 },
+      { name: 'Jira', years: 2 },
     ],
   },
 ];
 
-
-const SkillCard = ({ skill, delay, color }: { skill: any; delay: number; color: string }) => {
-  return (
-    <motion.div
-      className="group relative overflow-hidden rounded-xl border border-white/10 hover:border-white/20 transition-all"
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ delay, duration: 0.5 }}
-      viewport={{ once: true }}
-      whileHover={{
-        y: -8,
-        boxShadow: `0 0 40px ${
-          color.includes('purple') ? 'rgba(199, 120, 221, 0.25)' :
-          color.includes('blue') ? 'rgba(91, 158, 255, 0.25)' :
-          color.includes('green') ? 'rgba(34, 197, 94, 0.25)' :
-          'rgba(249, 115, 22, 0.25)'
-        }`,
-      }}
-      style={{
-        background: 'linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01))'
-      }}
-    >
-      {/* Animated Top Bar */}
-      <motion.div
-        className={`h-1 bg-gradient-to-r ${color} rounded-full absolute top-0 left-0 overflow-hidden`}
-        initial={{ width: '0%' }}
-        whileInView={{ width: '100%' }}
-        transition={{ delay: delay + 0.1, duration: 0.8, ease: 'easeOut' }}
-        viewport={{ once: true }}
-      >
-        <motion.div
-          className={`h-full bg-gradient-to-r ${color}`}
-          animate={{ opacity: [0.5, 1, 0.5] }}
-          transition={{ duration: 2.5, repeat: Infinity, delay: delay * 0.15 }}
-        />
-      </motion.div>
-
-      <div className="p-6">
-        {/* Header with name and percentage */}
-        <div className="flex items-start justify-between mb-5">
-          <div className="flex-1">
-            <motion.h4
-              className="text-white font-bold text-sm leading-tight"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ delay: delay + 0.15 }}
-              viewport={{ once: true }}
-            >
-              {skill.name}
-            </motion.h4>
-            <motion.p
-              className="text-gray-500 text-xs mt-1.5"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ delay: delay + 0.2 }}
-              viewport={{ once: true }}
-            >
-              {skill.exp}
-            </motion.p>
-          </div>
-          <motion.div
-            className={`flex items-center justify-center w-12 h-12 rounded-lg bg-gradient-to-br ${color} text-white font-bold text-sm flex-shrink-0 ml-3 shadow-lg`}
-            initial={{ opacity: 0, scale: 0 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ delay: delay + 0.15, type: 'spring', stiffness: 200 }}
-            viewport={{ once: true }}
-          >
-            {skill.level}%
-          </motion.div>
-        </div>
-
-        {/* Animated Progress Bar with shimmer effect */}
-        <div className="relative h-2.5 bg-white/10 rounded-full overflow-hidden">
-          {/* Background fill */}
-          <motion.div
-            className={`h-full bg-gradient-to-r ${color} rounded-full`}
-            initial={{ width: '0%' }}
-            whileInView={{ width: `${skill.level}%` }}
-            transition={{ delay: delay + 0.2, duration: 1.2, ease: 'easeOut' }}
-            viewport={{ once: true }}
-          />
-
-          {/* Animated shimmer/loading effect */}
-          <motion.div
-            className={`absolute inset-0 h-full w-1/3 bg-gradient-to-r from-transparent via-white to-transparent opacity-40`}
-            animate={{
-              x: ['-100%', '300%'],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: 'linear',
-            }}
-          />
-        </div>
-      </div>
-    </motion.div>
-  );
-};
+const SkillChip = ({ skill, idx }: { skill: Skill; idx: number }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 12 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ delay: Math.min(idx * 0.04, 0.4), duration: 0.4, ease: 'easeOut' }}
+    viewport={{ once: true, amount: 0.2 }}
+    whileHover={{ y: -4, borderColor: 'rgba(199, 120, 221, 0.6)' }}
+    className="group flex items-center justify-between px-5 py-4 rounded-xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] transition-colors"
+  >
+    <span className="text-white font-medium text-sm tracking-tight">{skill.name}</span>
+    <span className="text-[11px] uppercase tracking-widest text-gray-500 group-hover:text-[#c778dd] transition-colors">
+      {skill.years}{skill.years === 1 ? ' yr' : ' yrs'}
+    </span>
+  </motion.div>
+);
 
 export const Skills = () => {
   const [activeTab, setActiveTab] = useState('frontend');
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-  const activeCategory = skillCategories.find(cat => cat.id === activeTab);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  const isMobile = useIsMobile();
+  const activeCategory = skillCategories.find((cat) => cat.id === activeTab);
 
   return (
     <section id="skills" className="py-32 relative overflow-hidden bg-transparent">
       {!isMobile && <SectionBackground variant="skills" />}
 
-      {/* Animated background orbs - hidden on mobile */}
-      {!isMobile && (
-        <>
-          <motion.div
-            className="absolute top-32 left-0 w-96 h-96 rounded-full blur-3xl opacity-25"
-            animate={{ 
-              y: [0, 50, 0],
-              x: [0, 30, 0],
-              scale: [1, 1.2, 1]
-            }}
-            transition={{ duration: 13, repeat: Infinity, ease: 'easeInOut' }}
-            style={{
-              background: 'linear-gradient(135deg, #5b9eff, #c778dd)'
-            }}
-          />
-
-          <motion.div
-            className="absolute bottom-32 right-0 w-80 h-80 rounded-full blur-3xl opacity-20"
-            animate={{ 
-              y: [0, -40, 0],
-              x: [0, -25, 0],
-              scale: [1, 1.15, 1]
-            }}
-            transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut', delay: 1.2 }}
-            style={{
-              background: 'linear-gradient(135deg, #c778dd, #5b9eff)'
-            }}
-          />
-        </>
-      )}
-
       <div className="container mx-auto px-4 relative z-10">
-        {/* Section Header with Animated Line */}
-        <motion.div
-          className="max-w-3xl mx-auto mb-20 text-center relative"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-        >
-          {/* Animated accent line */}
-          <motion.div
-            className="h-1 w-16 bg-gradient-to-r from-[#5b9eff] to-[#c778dd] rounded-full mx-auto mb-8"
-            initial={{ width: 0, opacity: 0 }}
-            whileInView={{ width: 64, opacity: 1 }}
-            viewport={{ once: true }}
-            animate={{ 
-              opacity: [1, 0.5, 1]
-            }}
-            transition={{ 
-              opacity: { duration: 2, repeat: Infinity, ease: 'easeInOut' },
-              default: { delay: 0.2, duration: 0.8, ease: 'easeOut' }
-            }}
-          />
-
-          <motion.span
-            className="inline-block text-[#5b9eff] font-semibold text-sm uppercase tracking-widest mb-4"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ delay: 0.1 }}
-            viewport={{ once: true }}
-          >
-            🔧 My Expertise
-          </motion.span>
+        {/* Header */}
+        <div className="max-w-3xl mx-auto mb-16 text-center">
+          <span className="inline-block text-[#c778dd] font-semibold text-xs uppercase tracking-[0.25em] mb-4">
+            My Expertise
+          </span>
 
           <AnimatedTitle>Technical Skills</AnimatedTitle>
 
-          <motion.p
-            className="text-gray-400 text-lg mt-6"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            viewport={{ once: true }}
-          >
-            Proficiency in modern web technologies and tools
-          </motion.p>
-        </motion.div>
+          <p className="text-gray-400 text-lg mt-4">
+            Years building with modern web technologies
+          </p>
+        </div>
 
-        {/* Tab Navigation with Enhanced Styling */}
-        <motion.div
-          className="flex justify-center gap-3 mb-16 flex-wrap"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          viewport={{ once: true }}
-        >
-          {skillCategories.map((category, idx) => (
-            <motion.button
+        {/* Tab Navigation */}
+        <div className="flex justify-center gap-2 mb-12 flex-wrap">
+          {skillCategories.map((category) => (
+            <button
               key={category.id}
+              type="button"
               onClick={() => setActiveTab(category.id)}
-              className={`relative px-6 py-3 rounded-full font-semibold text-sm uppercase tracking-widest transition-all overflow-hidden group border-2 ${
+              className={`relative px-6 py-2.5 rounded-full font-medium text-sm transition-all ${
                 activeTab === category.id
-                  ? 'text-white border-cyan-500'
-                  : 'text-gray-400 border-white/20 hover:text-gray-200 hover:border-white/40'
+                  ? 'text-white bg-white/10 border border-white/25'
+                  : 'text-gray-400 border border-white/10 hover:text-white hover:border-white/20'
               }`}
-              whileHover={{ scale: 1.08 }}
-              whileTap={{ scale: 0.95 }}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.1 + 0.2 }}
-              viewport={{ once: true }}
             >
-              {/* Background gradient for active tab */}
-              {activeTab === category.id && (
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-blue-500 via-cyan-500 to-blue-500 rounded-full opacity-20"
-                  layoutId="activeTab"
-                  transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                />
-              )}
-
-              <span className="relative z-10">{category.title}</span>
-            </motion.button>
+              {category.title}
+              <span className="ml-2 text-xs text-gray-500">{category.skills.length}</span>
+            </button>
           ))}
-        </motion.div>
+        </div>
 
         {/* Skills Grid */}
         {activeCategory && (
           <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 max-w-5xl mx-auto"
+            key={activeTab}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 max-w-5xl mx-auto"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.4 }}
-            key={activeTab}
+            transition={{ duration: 0.35 }}
           >
             {activeCategory.skills.map((skill, idx) => (
-              <SkillCard
-                key={skill.name}
-                skill={skill}
-                delay={idx * 0.08}
-                color={skill.color}
-              />
+              <SkillChip key={skill.name} skill={skill} idx={idx} />
             ))}
           </motion.div>
         )}
-
-        {/* Bottom decoration line */}
-        <motion.div
-          className="mt-20 h-1 w-24 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mx-auto"
-          initial={{ width: 0 }}
-          whileInView={{ width: 96 }}
-          transition={{ delay: 0.5, duration: 0.8, ease: 'easeOut' }}
-          viewport={{ once: true }}
-        />
       </div>
     </section>
   );

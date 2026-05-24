@@ -39,11 +39,12 @@ export const AnimatedCard = ({ children, className = '', delay = 0 }: AnimatedTi
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y: 40, rotateX: 15, filter: 'blur(10px)' }}
-      whileInView={{ opacity: 1, y: 0, rotateX: 0, filter: 'blur(0px)' }}
-      whileHover={{ y: -15, scale: 1.05 }}
-      transition={{ duration: 0.6, delay, type: 'spring', stiffness: 100 }}
+      initial={{ opacity: 0, y: 40, scale: 0.95 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      whileHover={{ y: -10, scale: 1.02 }}
+      transition={{ duration: 0.5, delay, type: 'spring', stiffness: 80, damping: 15 }}
       viewport={{ once: true, amount: 0.3 }}
+      style={{ willChange: 'transform, opacity' }}
     >
       {children}
     </motion.div>
@@ -79,16 +80,15 @@ export const FloatingElement = ({ children, className = '' }: { children: React.
     <motion.div
       className={className}
       animate={{ 
-        y: [0, -30, 0],
-        rotate: [0, 3, -3, 0],
-        scale: [1, 1.08, 1]
+        y: [0, -20, 0],
+        rotate: [0, 2, -2, 0]
       }}
       transition={{ 
-        duration: 6, 
+        duration: 8, 
         repeat: Infinity, 
-        ease: 'easeInOut',
-        times: [0, 0.5, 1]
+        ease: 'easeInOut'
       }}
+      style={{ willChange: 'transform' }}
     >
       {children}
     </motion.div>
@@ -98,6 +98,7 @@ export const FloatingElement = ({ children, className = '' }: { children: React.
 export const GlowingText = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => {
   return (
     <motion.span
+      style={{ willChange: 'opacity' }}
       className={`text-transparent bg-clip-text bg-gradient-to-r from-white via-[#c778dd] to-white ${className}`}
       animate={{
         textShadow: [

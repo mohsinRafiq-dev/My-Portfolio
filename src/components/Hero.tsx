@@ -63,6 +63,8 @@ export const Hero = () => {
   const mobileHeroAnimationsEnabled = true;
   const reduceHeroOnMobile = isMobile && !mobileHeroAnimationsEnabled;
   const liteHeroOnMobile = isMobile && mobileHeroAnimationsEnabled;
+  const primaryCtaRef = useMagnetic(0.3);
+  const resumeCtaRef = useMagnetic(0.25);
   const container = {
     hidden: { opacity: 0 },
     visible: {
@@ -167,7 +169,7 @@ export const Hero = () => {
 
             {/* Subtitle */}
             <motion.div variants={item}>
-              <p className="text-sm md:text-base font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#5b9eff] to-[#c778dd] uppercase tracking-widest">
+              <p className="text-sm md:text-base font-semibold text-[#c778dd] uppercase tracking-[0.25em]">
                 Creative Developer
               </p>
             </motion.div>
@@ -248,71 +250,43 @@ export const Hero = () => {
             {/* CTA Buttons */}
             <motion.div variants={item} className="flex flex-col sm:flex-row gap-4 pt-6">
               <motion.button
+                ref={primaryCtaRef as React.RefObject<HTMLButtonElement>}
                 type="button"
                 aria-label="Scroll to contact section"
-                className="group relative px-6 md:px-8 py-3 md:py-4 font-bold rounded-full overflow-hidden flex items-center justify-center gap-2 bg-gradient-to-r from-[#5b9eff] to-[#c778dd] text-white shadow-lg"
-                whileHover={reduceHeroOnMobile ? {} : {
-                  scale: 1.08,
-                  boxShadow: '0 20px 60px rgba(199, 120, 221, 0.8), 0 0 40px rgba(91, 158, 255, 0.6)'
-                }}
-                whileTap={{ scale: 0.95 }}
+                className="magnetic group relative px-6 md:px-8 py-3 md:py-4 font-bold rounded-full overflow-hidden flex items-center justify-center gap-2 bg-gradient-to-r from-[#5b9eff] to-[#c778dd] text-white shadow-lg shadow-[#c778dd]/30"
+                whileHover={reduceHeroOnMobile ? {} : { scale: 1.04 }}
+                whileTap={{ scale: 0.96 }}
                 onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
               >
-                <motion.div
-                  className="absolute inset-0 bg-white/20"
-                  initial={{ x: '-100%' }}
-                  whileHover={reduceHeroOnMobile ? {} : { x: '100%' }}
-                  transition={{ duration: 0.5 }}
-                />
-                <motion.div
-                  className="absolute inset-0 rounded-full bg-gradient-to-r from-[#5b9eff]/40 to-[#c778dd]/40 blur-xl opacity-0"
-                  animate={reduceHeroOnMobile || liteHeroOnMobile ? {} : { opacity: [0, 0.5, 0] }}
-                  transition={reduceHeroOnMobile ? { duration: 0 } : { duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-                />
                 <span className="relative z-10 flex items-center gap-2">
                   Let's Talk
-                  <motion.div
-                    animate={reduceHeroOnMobile ? {} : liteHeroOnMobile ? { x: [0, 3, 0] } : { x: [0, 6, 0], rotate: [0, 10, 0] }}
-                    transition={reduceHeroOnMobile ? { duration: 0 } : { duration: liteHeroOnMobile ? 2.2 : 1.5, repeat: Infinity }}
-                  >
-                    <ArrowRight size={18} />
-                  </motion.div>
+                  <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
                 </span>
               </motion.button>
 
               <motion.a
-                href="/Resume.pdf"
+                ref={resumeCtaRef as React.RefObject<HTMLAnchorElement>}
+                href="/resume.pdf"
                 download
                 aria-label="Download Resume"
-                className="group relative px-6 md:px-8 py-3 md:py-4 font-bold rounded-full border-2 border-[#c778dd]/50 text-white overflow-hidden flex items-center justify-center gap-2"
-                whileHover={reduceHeroOnMobile ? {} : {
-                  scale: 1.08,
-                  backgroundColor: 'rgba(199, 120, 221, 0.15)',
-                  borderColor: '#c778dd',
-                  boxShadow: '0 15px 50px rgba(199, 120, 221, 0.5)'
-                }}
-                whileTap={{ scale: 0.95 }}
+                className="magnetic group relative px-6 md:px-8 py-3 md:py-4 font-semibold rounded-full border border-white/15 bg-white/5 text-white overflow-hidden flex items-center justify-center gap-2 hover:bg-white/10 hover:border-white/30 transition-colors"
+                whileHover={reduceHeroOnMobile ? {} : { scale: 1.03 }}
+                whileTap={{ scale: 0.96 }}
               >
-                <motion.div
-                  className="absolute inset-0 border-2 border-transparent rounded-full"
-                  animate={reduceHeroOnMobile ? {} : { borderColor: ['rgba(199, 120, 221, 0)', 'rgba(199, 120, 221, 0.5)', 'rgba(199, 120, 221, 0)'] }}
-                  transition={reduceHeroOnMobile ? { duration: 0 } : { duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-                />
                 <span className="relative z-10 flex items-center gap-2">
-                  <motion.svg 
-                    width="18" 
-                    height="18" 
-                    viewBox="0 0 24 24" 
-                    fill="none" 
-                    stroke="currentColor" 
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
                     strokeWidth="2"
-                    animate={reduceHeroOnMobile ? {} : { y: [0, 4, 0], x: [0, 2, 0] }}
-                    transition={reduceHeroOnMobile ? { duration: 0 } : { duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+                    className="transition-transform group-hover:translate-y-0.5"
                   >
                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                     <polyline points="7 10 12 15 17 10" />
                     <line x1="12" y1="15" x2="12" y2="3" />
-                  </motion.svg>
+                  </svg>
                   Resume
                 </span>
               </motion.a>
@@ -418,96 +392,12 @@ export const Hero = () => {
               </>
             )}
 
-            {/* Animated Particles around profile */}
-            {!reduceHeroOnMobile && (liteHeroOnMobile ? [0, 1] : [0, 1, 2, 3, 4]).map((idx) => (
-              <motion.div
-                key={`particle-${idx}`}
-                className="absolute w-1.5 h-1.5 rounded-full bg-gradient-to-br from-[#c778dd] to-[#5b9eff] z-20"
-                animate={{
-                  x: [
-                    Math.cos((idx / 5) * Math.PI * 2) * 200,
-                    Math.cos((idx / 5) * Math.PI * 2 + 0.5) * 220,
-                    Math.cos((idx / 5) * Math.PI * 2) * 200,
-                  ],
-                  y: [
-                    Math.sin((idx / 5) * Math.PI * 2) * 200,
-                    Math.sin((idx / 5) * Math.PI * 2 + 0.5) * 220,
-                    Math.sin((idx / 5) * Math.PI * 2) * 200,
-                  ],
-                  opacity: [0.3, 0.8, 0.3],
-                }}
-                transition={{
-                  duration: liteHeroOnMobile ? 6 + idx * 0.4 : 4 + idx * 0.5,
-                  repeat: Infinity,
-                  ease: 'easeInOut',
-                  delay: idx * 0.2,
-                }}
-              />
-            ))}
-
-            {/* Floating coding icons around the profile */}
-            {!reduceHeroOnMobile && (liteHeroOnMobile ? [
-              { icon: Code2, top: '16%', right: '-6px', delay: 0 },
-              { icon: Database, bottom: '18%', left: '-6px', delay: 1.2 },
-            ] : [
-              { icon: Code2, top: '15%', right: '-8px', delay: 0 },
-              { icon: Database, bottom: '20%', right: '-8px', delay: 1 },
-              { icon: Zap, bottom: '15%', left: '-8px', delay: 2 },
-              { icon: GitBranch, top: '20%', left: '-8px', delay: 1.5 },
-            ]).map((item, idx) => {
-              const Icon = item.icon;
-              return (
-                <motion.div
-                  key={idx}
-                  className="absolute w-10 h-10 rounded-lg bg-gradient-to-br from-[#c778dd]/20 to-[#5b9eff]/20 border border-[#c778dd]/40 flex items-center justify-center text-[#c778dd] backdrop-blur-sm md:flex z-20"
-                  style={{
-                    top: item.top,
-                    right: item.right,
-                    bottom: item.bottom,
-                    left: item.left,
-                  }}
-                  animate={{
-                    y: liteHeroOnMobile ? [0, -6, 0] : [0, -12, 0],
-                  }}
-                  transition={{
-                    duration: liteHeroOnMobile ? 4.5 : 3,
-                    repeat: Infinity,
-                    ease: 'easeInOut',
-                    delay: item.delay,
-                  }}
-                  whileHover={{ scale: 1.2 }}
-                >
-                  <Icon size={18} className="relative z-10" />
-                </motion.div>
-              );
-            })}
-
             {/* Profile Image Circle */}
             <motion.div
-              className="relative w-56 h-56 sm:w-64 sm:h-64 md:w-72 md:h-72 lg:w-72 lg:h-72 xl:w-80 xl:h-80 z-10 rounded-full overflow-hidden shadow-2xl shadow-[#c778dd]/30"
-              whileHover={reduceHeroOnMobile ? {} : { scale: 1.12 }}
-              animate={reduceHeroOnMobile ? {} : {
-                boxShadow: ['0 0 20px rgba(199, 120, 221, 0.3)', '0 0 40px rgba(199, 120, 221, 0.6)']
-              }}
-              transition={{ 
-                boxShadow: reduceHeroOnMobile ? { duration: 0 } : { duration: 2, repeat: Infinity, ease: 'easeInOut' },
-                scale: { type: 'spring', stiffness: 200, damping: 20 },
-              }}
+              className="relative w-56 h-56 sm:w-64 sm:h-64 md:w-72 md:h-72 lg:w-72 lg:h-72 xl:w-80 xl:h-80 z-10 rounded-full overflow-hidden shadow-2xl shadow-[#c778dd]/40 ring-1 ring-white/10"
+              whileHover={reduceHeroOnMobile ? {} : { scale: 1.04 }}
+              transition={{ scale: { type: 'spring', stiffness: 200, damping: 20 } }}
             >
-              {/* Simple Rotating Gradient Border */}
-              <motion.div
-                className="absolute inset-0 border-3 rounded-full pointer-events-none hidden md:block"
-                animate={{
-                  rotate: 360,
-                }}
-                transition={{
-                  rotate: { duration: reduceHeroOnMobile ? 50 : 35, repeat: Infinity, ease: 'linear' },
-                }}
-                style={{
-                  borderImage: 'linear-gradient(135deg, #c778dd, #5b9eff, #c778dd) 1',
-                  zIndex: 5,
-                }}
-              />
 
               {/* Profile image - clean and clear */}
               <img

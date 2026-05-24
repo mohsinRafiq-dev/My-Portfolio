@@ -10,8 +10,13 @@ export default defineConfig({
           'framer-motion': ['framer-motion'],
           'lucide-react': ['lucide-react'],
           'emailjs': ['@emailjs/browser'],
+          'vendor': ['react', 'react-dom'],
         },
       },
     },
+    chunkSizeWarningLimit: 1000,
+  },
+  optimizeDeps: {
+    include: ['framer-motion', 'react', 'react-dom'],
   },
 })
